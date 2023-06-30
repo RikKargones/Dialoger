@@ -1,0 +1,132 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Other/PanelWithCorners.tres" type="StyleBox" id=1]
+[ext_resource path="res://Elements/FontSettings.gd" type="Script" id=2]
+
+[node name="FontSettings" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+script = ExtResource( 2 )
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 590.0
+scroll_horizontal_enabled = false
+
+[node name="Settings" type="VBoxContainer" parent="Scroll"]
+margin_right = 1004.0
+margin_bottom = 524.0
+size_flags_horizontal = 3
+custom_constants/separation = 5
+
+[node name="File" type="HBoxContainer" parent="Scroll/Settings"]
+margin_right = 1004.0
+margin_bottom = 26.0
+custom_constants/separation = 10
+
+[node name="RenameBt" type="Button" parent="Scroll/Settings/File"]
+margin_right = 72.0
+margin_bottom = 26.0
+text = "Rename..."
+
+[node name="VSeparator" type="VSeparator" parent="Scroll/Settings/File"]
+margin_left = 82.0
+margin_right = 86.0
+margin_bottom = 26.0
+
+[node name="ReloadBt" type="Button" parent="Scroll/Settings/File"]
+margin_left = 96.0
+margin_right = 199.0
+margin_bottom = 26.0
+text = "Replace font..."
+
+[node name="Control" type="Control" parent="Scroll/Settings/File"]
+margin_left = 209.0
+margin_right = 941.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+
+[node name="DeleteBt" type="Button" parent="Scroll/Settings/File"]
+margin_left = 951.0
+margin_right = 1004.0
+margin_bottom = 26.0
+text = "Delete"
+
+[node name="HSeparator" type="HSeparator" parent="Scroll/Settings"]
+margin_top = 31.0
+margin_right = 1004.0
+margin_bottom = 35.0
+rect_pivot_offset = Vector2( -199, -89 )
+
+[node name="Size" type="HBoxContainer" parent="Scroll/Settings"]
+margin_top = 40.0
+margin_right = 1004.0
+margin_bottom = 70.0
+
+[node name="Label" type="Label" parent="Scroll/Settings/Size"]
+margin_top = 5.0
+margin_right = 29.0
+margin_bottom = 25.0
+text = "Size:"
+
+[node name="SpinBox" type="SpinBox" parent="Scroll/Settings/Size"]
+margin_left = 33.0
+margin_right = 119.0
+margin_bottom = 30.0
+min_value = 6.0
+max_value = 72.0
+value = 16.0
+suffix = "px"
+
+[node name="HSeparator2" type="HSeparator" parent="Scroll/Settings"]
+margin_top = 75.0
+margin_right = 1004.0
+margin_bottom = 79.0
+rect_pivot_offset = Vector2( -199, -89 )
+
+[node name="Label" type="Label" parent="Scroll/Settings"]
+margin_top = 84.0
+margin_right = 1004.0
+margin_bottom = 104.0
+text = "Paronims:"
+
+[node name="TestTexts" type="Label" parent="Scroll/Settings"]
+margin_top = 109.0
+margin_right = 1004.0
+margin_bottom = 185.0
+custom_styles/normal = ExtResource( 1 )
+text = "The quick brown fox jumps over the lazy dog
+Съешь ещё этих мягких французских булок да выпей чаю
+. , ? ! \" ; : / ` ( ) % # [ ]"
+autowrap = true
+
+[node name="HSeparator3" type="HSeparator" parent="Scroll/Settings"]
+margin_top = 190.0
+margin_right = 1004.0
+margin_bottom = 194.0
+rect_pivot_offset = Vector2( -199, -89 )
+
+[node name="Label2" type="Label" parent="Scroll/Settings"]
+margin_top = 199.0
+margin_right = 1004.0
+margin_bottom = 219.0
+text = "Test filed:"
+
+[node name="TestFiled" type="TextEdit" parent="Scroll/Settings"]
+margin_top = 224.0
+margin_right = 1004.0
+margin_bottom = 524.0
+rect_min_size = Vector2( 0, 300 )
+size_flags_vertical = 3
+wrap_enabled = true
+
+[connection signal="tree_exiting" from="." to="." method="_on_FontSettings_tree_exiting"]
+[connection signal="pressed" from="Scroll/Settings/File/RenameBt" to="." method="_on_RenameBt_pressed"]
+[connection signal="pressed" from="Scroll/Settings/File/ReloadBt" to="." method="_on_ReloadBt_pressed"]
+[connection signal="pressed" from="Scroll/Settings/File/DeleteBt" to="." method="_on_DeleteBt_pressed"]

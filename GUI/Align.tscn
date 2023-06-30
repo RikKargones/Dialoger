@@ -1,0 +1,9 @@
+[gd_scene format=2]
+
+[node name="Align" type="OptionButton"]
+margin_top = 24.0
+margin_right = 78.0
+margin_bottom = 50.0
+text = "Left"
+items = [ "Left", null, false, 0, null, "Center", null, false, 1, null, "Right", null, false, 2, null ]
+selected = 0

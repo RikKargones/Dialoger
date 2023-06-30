@@ -1,0 +1,342 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Other/Main.gd" type="Script" id=1]
+[ext_resource path="res://Workspaces/ProjectSettings.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Workspaces/Preview.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Workspaces/DialogEditor.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Workspaces/PersonsEditor.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Workspaces/FontsEditor.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Workspaces/VariblesEditor.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Workspaces/LocalsaionEditor.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Workspaces/LoadScreen.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Popups/ProjectSettingsPopup.tscn" type="PackedScene" id=10]
+
+[sub_resource type="ButtonGroup" id=1]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.137255, 0.137255, 0.137255, 0.470588 )
+
+[node name="Main" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="All" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="SelectBts" type="HBoxContainer" parent="All"]
+margin_right = 1024.0
+margin_bottom = 26.0
+
+[node name="ProjectsBt" type="Button" parent="All/SelectBts"]
+margin_right = 63.0
+margin_bottom = 26.0
+group = SubResource( 1 )
+text = "Projects"
+flat = true
+
+[node name="SettingsBt" type="Button" parent="All/SelectBts"]
+margin_left = 67.0
+margin_right = 131.0
+margin_bottom = 26.0
+group = SubResource( 1 )
+text = "Settings"
+flat = true
+
+[node name="VSeparator" type="VSeparator" parent="All/SelectBts"]
+margin_left = 135.0
+margin_right = 139.0
+margin_bottom = 26.0
+
+[node name="ProfilesBt" type="Button" parent="All/SelectBts"]
+margin_left = 143.0
+margin_right = 260.0
+margin_bottom = 26.0
+group = SubResource( 1 )
+text = "Persons Profiles"
+flat = true
+
+[node name="VariblesBt" type="Button" parent="All/SelectBts"]
+margin_left = 264.0
+margin_right = 328.0
+margin_bottom = 26.0
+text = "Varibles"
+flat = true
+
+[node name="LangsBt" type="Button" parent="All/SelectBts"]
+margin_left = 332.0
+margin_right = 406.0
+margin_bottom = 26.0
+text = "Language"
+flat = true
+
+[node name="FontsBt" type="Button" parent="All/SelectBts"]
+margin_left = 410.0
+margin_right = 456.0
+margin_bottom = 26.0
+group = SubResource( 1 )
+text = "Fonts"
+flat = true
+
+[node name="VSeparator5" type="VSeparator" parent="All/SelectBts"]
+margin_left = 460.0
+margin_right = 464.0
+margin_bottom = 26.0
+
+[node name="DiaEditBt" type="Button" parent="All/SelectBts"]
+margin_left = 468.0
+margin_right = 562.0
+margin_bottom = 26.0
+group = SubResource( 1 )
+text = "Dialog Editor"
+flat = true
+
+[node name="VSeparator2" type="VSeparator" parent="All/SelectBts"]
+margin_left = 566.0
+margin_right = 570.0
+margin_bottom = 26.0
+
+[node name="PreviewBt" type="Button" parent="All/SelectBts"]
+margin_left = 574.0
+margin_right = 637.0
+margin_bottom = 26.0
+group = SubResource( 1 )
+text = "Preview"
+flat = true
+
+[node name="VSeparator4" type="VSeparator" parent="All/SelectBts"]
+margin_left = 641.0
+margin_right = 645.0
+margin_bottom = 26.0
+
+[node name="ProjectName" parent="All/SelectBts" instance=ExtResource( 10 )]
+margin_left = 649.0
+margin_right = 918.0
+
+[node name="VSeparator3" type="VSeparator" parent="All/SelectBts"]
+margin_left = 922.0
+margin_right = 926.0
+margin_bottom = 26.0
+size_flags_horizontal = 8
+
+[node name="AboutBt" type="Button" parent="All/SelectBts"]
+margin_left = 930.0
+margin_right = 978.0
+margin_bottom = 26.0
+text = "About"
+flat = true
+
+[node name="VSeparator6" type="VSeparator" parent="All/SelectBts"]
+margin_left = 982.0
+margin_right = 986.0
+margin_bottom = 26.0
+size_flags_horizontal = 8
+
+[node name="ExitBt" type="Button" parent="All/SelectBts"]
+margin_left = 990.0
+margin_right = 1024.0
+margin_bottom = 26.0
+text = "Exit"
+flat = true
+
+[node name="Scroller" type="ScrollContainer" parent="All"]
+margin_top = 30.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="Workspace" type="TabContainer" parent="All/Scroller"]
+margin_right = 1024.0
+margin_bottom = 570.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tab_align = 0
+tabs_visible = false
+
+[node name="LoadScreen" parent="All/Scroller/Workspace" instance=ExtResource( 9 )]
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Project" parent="All/Scroller/Workspace" instance=ExtResource( 2 )]
+visible = false
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Preview" parent="All/Scroller/Workspace" instance=ExtResource( 3 )]
+visible = false
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="DialogEditor" parent="All/Scroller/Workspace" instance=ExtResource( 4 )]
+visible = false
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="PersonsEditor" parent="All/Scroller/Workspace" instance=ExtResource( 5 )]
+visible = false
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Fonts" parent="All/Scroller/Workspace" instance=ExtResource( 6 )]
+visible = false
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="VariblesEditor" parent="All/Scroller/Workspace" instance=ExtResource( 7 )]
+visible = false
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="LocalsaionEditor" parent="All/Scroller/Workspace" instance=ExtResource( 8 )]
+visible = false
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="AboutTab" type="MarginContainer" parent="All/Scroller/Workspace"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="Main" type="VBoxContainer" parent="All/Scroller/Workspace/AboutTab"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 1011.0
+margin_bottom = 553.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="All/Scroller/Workspace/AboutTab/Main"]
+margin_top = 12.0
+margin_right = 1006.0
+margin_bottom = 154.0
+size_flags_vertical = 6
+bbcode_enabled = true
+bbcode_text = "[center][font=res://Fonts/BigFont.tres]DIALOGER[/font]
+by RikKargones
+
+[font=res://Fonts/MedFont.tres]Separate dialog editor for games on Godot.[/font][/center]"
+text = "DIALOGER
+by RikKargones
+
+Separate dialog editor for games on Godot."
+fit_content_height = true
+
+[node name="HSeparator2" type="HSeparator" parent="All/Scroller/Workspace/AboutTab/Main"]
+margin_top = 170.0
+margin_right = 1006.0
+margin_bottom = 174.0
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="All/Scroller/Workspace/AboutTab/Main"]
+margin_top = 243.0
+margin_right = 1006.0
+margin_bottom = 279.0
+size_flags_vertical = 6
+bbcode_enabled = true
+bbcode_text = "[center][font=res://Fonts/MedFont.tres]Instrument what gives a simpleer way to write dialogs for Godot games without writing GDScripts.[/font][/center]"
+text = "Instrument what gives a simpleer way to write dialogs for Godot games without writing GDScripts."
+fit_content_height = true
+
+[node name="HSeparator3" type="HSeparator" parent="All/Scroller/Workspace/AboutTab/Main"]
+margin_top = 349.0
+margin_right = 1006.0
+margin_bottom = 353.0
+size_flags_vertical = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="All/Scroller/Workspace/AboutTab/Main"]
+margin_top = 357.0
+margin_right = 1006.0
+margin_bottom = 521.0
+size_flags_vertical = 2
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="All/Scroller/Workspace/AboutTab/Main/VBoxContainer"]
+margin_right = 1006.0
+margin_bottom = 72.0
+size_flags_vertical = 8
+bbcode_enabled = true
+bbcode_text = "[right][font=res://Fonts/MedFont.tres]Source code: <some url>
+Last build: <some url>[/font][/right]"
+text = "Source code: <some url>
+Last build: <some url>"
+fit_content_height = true
+
+[node name="HSeparator" type="HSeparator" parent="All/Scroller/Workspace/AboutTab/Main/VBoxContainer"]
+margin_top = 76.0
+margin_right = 1006.0
+margin_bottom = 80.0
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="All/Scroller/Workspace/AboutTab/Main/VBoxContainer"]
+margin_top = 84.0
+margin_right = 1006.0
+margin_bottom = 156.0
+size_flags_vertical = 8
+bbcode_enabled = true
+bbcode_text = "[right][font=res://Fonts/MedFont.tres]Interface documetation: <some url>
+Inplement instractions: <some url>[/font][/right]"
+text = "Interface documetation: <some url>
+Inplement instractions: <some url>"
+fit_content_height = true
+
+[node name="HSeparator4" type="HSeparator" parent="All/Scroller/Workspace/AboutTab/Main/VBoxContainer"]
+margin_top = 160.0
+margin_right = 1006.0
+margin_bottom = 164.0
+size_flags_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="All/Scroller/Workspace/AboutTab/Main"]
+margin_top = 528.0
+margin_right = 1006.0
+margin_bottom = 548.0
+
+[node name="Label" type="Label" parent="All/Scroller/Workspace/AboutTab/Main/HBoxContainer"]
+margin_right = 50.0
+margin_bottom = 20.0
+text = "Version:"
+
+[node name="Label2" type="Label" parent="All/Scroller/Workspace/AboutTab/Main/HBoxContainer"]
+margin_left = 54.0
+margin_right = 134.0
+margin_bottom = 20.0
+text = "0.6.7 (DevGo)"
+
+[node name="Blocker" type="Panel" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 2 )
+
+[connection signal="tree_exiting" from="." to="." method="_on_Main_tree_exiting"]
+[connection signal="pressed" from="All/SelectBts/ProjectsBt" to="." method="_on_ProjectsBt_pressed"]
+[connection signal="pressed" from="All/SelectBts/SettingsBt" to="." method="_on_SettingsBt_pressed"]
+[connection signal="pressed" from="All/SelectBts/ProfilesBt" to="." method="_on_ProfilesBt_pressed"]
+[connection signal="pressed" from="All/SelectBts/VariblesBt" to="." method="_on_VariblesBt_pressed"]
+[connection signal="pressed" from="All/SelectBts/LangsBt" to="." method="_on_LangsBt_pressed"]
+[connection signal="pressed" from="All/SelectBts/FontsBt" to="." method="_on_FontsBt_pressed"]
+[connection signal="pressed" from="All/SelectBts/DiaEditBt" to="." method="_on_DiaEditBt_pressed"]
+[connection signal="pressed" from="All/SelectBts/PreviewBt" to="." method="_on_PreviewBt_pressed"]
+[connection signal="pressed" from="All/SelectBts/AboutBt" to="." method="_on_AboutBt_pressed"]
+[connection signal="hide_interface" from="All/Scroller/Workspace/DialogEditor" to="." method="_on_DialogEditor_hide_interface"]

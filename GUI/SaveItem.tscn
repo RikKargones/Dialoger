@@ -1,0 +1,112 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Other/PanelWithCorners.tres" type="StyleBox" id=1]
+[ext_resource path="res://Fonts/MedFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://GUI/SaveItem.gd" type="Script" id=3]
+
+[node name="SaveItem" type="PanelContainer"]
+margin_right = 994.0
+margin_bottom = 69.0
+custom_styles/panel = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Main" type="HBoxContainer" parent="."]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 989.0
+margin_bottom = 80.0
+
+[node name="Buttons" type="VBoxContainer" parent="Main"]
+margin_right = 89.0
+margin_bottom = 75.0
+size_flags_vertical = 3
+alignment = 1
+
+[node name="LoadBt" type="Button" parent="Main/Buttons"]
+margin_right = 89.0
+margin_bottom = 35.0
+size_flags_vertical = 3
+text = "Load"
+
+[node name="FindBt" type="Button" parent="Main/Buttons"]
+margin_top = 39.0
+margin_right = 89.0
+margin_bottom = 75.0
+size_flags_vertical = 3
+text = "Open Folder"
+
+[node name="VSeparator" type="VSeparator" parent="Main"]
+margin_left = 93.0
+margin_right = 97.0
+margin_bottom = 75.0
+
+[node name="SaveInfo" type="VBoxContainer" parent="Main"]
+margin_left = 101.0
+margin_right = 919.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 0, 75 )
+size_flags_horizontal = 3
+
+[node name="SaveName" type="Label" parent="Main/SaveInfo"]
+margin_right = 818.0
+margin_bottom = 35.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "???"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="Main/SaveInfo"]
+margin_top = 39.0
+margin_right = 818.0
+margin_bottom = 43.0
+
+[node name="Dates" type="HBoxContainer" parent="Main/SaveInfo"]
+margin_top = 47.0
+margin_right = 818.0
+margin_bottom = 67.0
+custom_constants/separation = 10
+
+[node name="Path" type="Label" parent="Main/SaveInfo/Dates"]
+margin_right = 394.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "NO PATH SETED!"
+clip_text = true
+
+[node name="VSeparator" type="VSeparator" parent="Main/SaveInfo/Dates"]
+margin_left = 404.0
+margin_right = 408.0
+margin_bottom = 20.0
+
+[node name="CreationDate" type="Label" parent="Main/SaveInfo/Dates"]
+margin_left = 418.0
+margin_right = 598.0
+margin_bottom = 20.0
+text = "Created: ??.??.???? (v. ?.?.? )"
+
+[node name="VSeparator2" type="VSeparator" parent="Main/SaveInfo/Dates"]
+margin_left = 608.0
+margin_right = 612.0
+margin_bottom = 20.0
+
+[node name="SaveDate" type="Label" parent="Main/SaveInfo/Dates"]
+margin_left = 622.0
+margin_right = 818.0
+margin_bottom = 20.0
+text = "Last saved: ??.??.???? (v. ?.?.?)"
+
+[node name="VSeparator2" type="VSeparator" parent="Main"]
+margin_left = 923.0
+margin_right = 927.0
+margin_bottom = 75.0
+
+[node name="DelBt" type="Button" parent="Main"]
+margin_left = 931.0
+margin_right = 984.0
+margin_bottom = 75.0
+size_flags_vertical = 3
+text = "Delete"
+
+[connection signal="pressed" from="Main/Buttons/LoadBt" to="." method="_on_LoadBt_pressed"]
+[connection signal="pressed" from="Main/Buttons/FindBt" to="." method="_on_FindBt_pressed"]
+[connection signal="pressed" from="Main/DelBt" to="." method="_on_DelBt_pressed"]

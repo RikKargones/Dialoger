@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GUI/TranslatorSettings.gd" type="Script" id=1]
+
+[node name="TranslatorSettings" type="HBoxContainer"]
+script = ExtResource( 1 )
+
+[node name="TransMode" type="CheckButton" parent="."]
+margin_right = 185.0
+margin_bottom = 40.0
+text = "Translator Mode"
+
+[node name="Label" type="Label" parent="."]
+margin_left = 189.0
+margin_top = 10.0
+margin_right = 313.0
+margin_bottom = 30.0
+text = "Compare langauge:"
+
+[node name="LangChoose" type="OptionButton" parent="."]
+margin_left = 317.0
+margin_right = 346.0
+margin_bottom = 40.0
+
+[connection signal="toggled" from="TransMode" to="." method="_on_TransMode_toggled"]
+[connection signal="item_selected" from="LangChoose" to="." method="_on_LangChoose_item_selected"]

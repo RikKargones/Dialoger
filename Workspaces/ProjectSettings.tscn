@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Workspaces/ProjectSettings.gd" type="Script" id=2]
+[ext_resource path="res://Fonts/MedFont.tres" type="DynamicFont" id=3]
+
+[node name="Project" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+script = ExtResource( 2 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 1019.0
+margin_bottom = 595.0
+scroll_horizontal_enabled = false
+
+[node name="VBox" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 1014.0
+margin_bottom = 590.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="ScrollContainer/VBox"]
+margin_right = 1014.0
+margin_bottom = 35.0
+custom_fonts/font = ExtResource( 3 )
+text = "Program Settings:"
+align = 1
+
+[node name="ProgramSettings" type="VBoxContainer" parent="ScrollContainer/VBox"]
+margin_top = 39.0
+margin_right = 1014.0
+margin_bottom = 67.0
+
+[node name="AskDelete" type="HBoxContainer" parent="ScrollContainer/VBox/ProgramSettings"]
+margin_right = 1014.0
+margin_bottom = 28.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBox/ProgramSettings/AskDelete"]
+margin_top = 4.0
+margin_right = 986.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Need confirmation on mood deleting:"
+
+[node name="CheckBox" type="CheckBox" parent="ScrollContainer/VBox/ProgramSettings/AskDelete"]
+margin_left = 990.0
+margin_right = 1014.0
+margin_bottom = 28.0

@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends ConfirmationDialog
+
+func _ready():
+	dialog_text = \"\"
+
+func set_text_centred(text):
+	$Text.text = text
+"
+
+[node name="ConfirmationDialog" type="ConfirmationDialog"]
+margin_right = 274.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 150, 52.5 )
+window_title = "Confirm..."
+script = SubResource( 1 )
+
+[node name="Text" type="Label" parent="."]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 266.0
+margin_bottom = 28.0
+align = 1
+valign = 1

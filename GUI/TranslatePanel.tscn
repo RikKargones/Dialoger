@@ -1,0 +1,11 @@
+[gd_scene format=2]
+
+[node name="TranslatePanel" type="PanelContainer"]
+margin_right = 14.0
+margin_bottom = 14.0
+
+[node name="Label" type="Label" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 7.0
+margin_bottom = 27.0

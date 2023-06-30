@@ -1,0 +1,75 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://GUI/FontChoose.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GUI/LangElement.gd" type="Script" id=2]
+[ext_resource path="res://Other/PanelWithCorners.tres" type="StyleBox" id=3]
+
+[node name="LangElement" type="MarginContainer"]
+margin_right = 200.0
+margin_bottom = 80.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+script = ExtResource( 2 )
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 205.0
+margin_bottom = 85.0
+custom_styles/panel = ExtResource( 3 )
+
+[node name="Element" type="VBoxContainer" parent="."]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 205.0
+margin_bottom = 85.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="LangName" type="Label" parent="Element"]
+margin_right = 200.0
+margin_bottom = 20.0
+text = "Test Name"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="FontSet" type="HBoxContainer" parent="Element"]
+margin_top = 24.0
+margin_right = 200.0
+margin_bottom = 50.0
+
+[node name="Label" type="Label" parent="Element/FontSet"]
+margin_top = 3.0
+margin_right = 30.0
+margin_bottom = 23.0
+hint_tooltip = "Шрифт, который будет установливатся по умолчанию для этого языка."
+mouse_filter = 1
+text = "Font:"
+
+[node name="FontChoose" parent="Element/FontSet" instance=ExtResource( 1 )]
+margin_left = 34.0
+margin_right = 200.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+
+[node name="ContrlSet" type="HBoxContainer" parent="Element"]
+margin_top = 54.0
+margin_right = 200.0
+margin_bottom = 80.0
+
+[node name="RmBt" type="Button" parent="Element/ContrlSet"]
+margin_right = 177.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+text = "Rename"
+
+[node name="DelBt" type="Button" parent="Element/ContrlSet"]
+margin_left = 181.0
+margin_right = 200.0
+margin_bottom = 26.0
+text = "X"
+
+[connection signal="pressed" from="Element/ContrlSet/RmBt" to="." method="_on_RmBt_pressed"]
+[connection signal="pressed" from="Element/ContrlSet/DelBt" to="." method="_on_DelBt_pressed"]

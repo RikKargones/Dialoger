@@ -1,0 +1,300 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Other/PanelWithCorners.tres" type="StyleBox" id=1]
+[ext_resource path="res://Workspaces/Preview.gd" type="Script" id=2]
+[ext_resource path="res://GUI/LangChooseBt.tscn" type="PackedScene" id=4]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Label
+
+func _physics_process(delta):
+	rect_position.y = get_parent().rect_size.y + 10
+"
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="Preview" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+script = ExtResource( 2 )
+
+[node name="Output" type="VBoxContainer" parent="."]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 590.0
+
+[node name="Line" type="HBoxContainer" parent="Output"]
+margin_right = 1004.0
+margin_bottom = 26.0
+
+[node name="StartBt" type="Button" parent="Output/Line"]
+margin_right = 39.0
+margin_bottom = 26.0
+text = "Play"
+
+[node name="EndBt" type="Button" parent="Output/Line"]
+margin_left = 43.0
+margin_right = 83.0
+margin_bottom = 26.0
+text = "Stop"
+
+[node name="VSeparator" type="VSeparator" parent="Output/Line"]
+margin_left = 87.0
+margin_right = 91.0
+margin_bottom = 26.0
+
+[node name="Label" type="Label" parent="Output/Line"]
+margin_left = 95.0
+margin_top = 3.0
+margin_right = 138.0
+margin_bottom = 23.0
+text = "Dialog:"
+
+[node name="DiaChoose" type="OptionButton" parent="Output/Line"]
+margin_left = 142.0
+margin_right = 171.0
+margin_bottom = 26.0
+
+[node name="Label2" type="Label" parent="Output/Line"]
+margin_left = 175.0
+margin_top = 3.0
+margin_right = 256.0
+margin_bottom = 23.0
+text = "Localization:"
+
+[node name="LangChangeBt" parent="Output/Line" instance=ExtResource( 4 )]
+margin_left = 260.0
+margin_right = 289.0
+
+[node name="VSeparator2" type="VSeparator" parent="Output/Line"]
+margin_left = 293.0
+margin_right = 297.0
+margin_bottom = 26.0
+
+[node name="VSeparator3" type="VSeparator" parent="Output/Line"]
+margin_left = 788.0
+margin_right = 792.0
+margin_bottom = 26.0
+size_flags_horizontal = 10
+
+[node name="OutputBt" type="Button" parent="Output/Line"]
+margin_left = 796.0
+margin_right = 1004.0
+margin_bottom = 26.0
+toggle_mode = true
+text = "Логи и установка переменных"
+
+[node name="SimplisedOutput" type="Label" parent="Output/Line/OutputBt"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -20.0
+grow_horizontal = 0
+custom_styles/normal = ExtResource( 1 )
+script = SubResource( 2 )
+
+[node name="Panel" type="Panel" parent="Output/Line/OutputBt/SimplisedOutput"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="AllOther" type="HSplitContainer" parent="Output"]
+margin_top = 30.0
+margin_right = 1004.0
+margin_bottom = 580.0
+size_flags_vertical = 3
+
+[node name="DiaWindow" type="VBoxContainer" parent="Output/AllOther"]
+margin_right = 1004.0
+margin_bottom = 550.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Textures" type="HBoxContainer" parent="Output/AllOther/DiaWindow"]
+margin_right = 1004.0
+margin_bottom = 501.0
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="Left" type="AspectRatioContainer" parent="Output/AllOther/DiaWindow/Textures"]
+margin_right = 328.0
+margin_bottom = 501.0
+size_flags_horizontal = 3
+alignment_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Output/AllOther/DiaWindow/Textures/Left"]
+margin_top = 173.0
+margin_right = 328.0
+margin_bottom = 501.0
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Output/AllOther/DiaWindow/Textures/Left/TextureRect"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -23.0
+margin_right = 86.0
+text = "hjfhjkhdkhdsk"
+valign = 2
+
+[node name="Center" type="AspectRatioContainer" parent="Output/AllOther/DiaWindow/Textures"]
+margin_left = 338.0
+margin_right = 666.0
+margin_bottom = 501.0
+size_flags_horizontal = 3
+alignment_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Output/AllOther/DiaWindow/Textures/Center"]
+margin_top = 173.0
+margin_right = 328.0
+margin_bottom = 501.0
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Output/AllOther/DiaWindow/Textures/Center/TextureRect"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -44.0
+margin_top = -23.0
+margin_right = 44.0
+text = "hjfhjkhdkhdsk"
+valign = 2
+
+[node name="Right" type="AspectRatioContainer" parent="Output/AllOther/DiaWindow/Textures"]
+margin_left = 676.0
+margin_right = 1004.0
+margin_bottom = 501.0
+size_flags_horizontal = 3
+alignment_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Output/AllOther/DiaWindow/Textures/Right"]
+margin_top = 173.0
+margin_right = 328.0
+margin_bottom = 501.0
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Output/AllOther/DiaWindow/Textures/Right/TextureRect"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -88.0
+margin_top = -23.0
+text = "hjfhjkhdkhdsk"
+valign = 2
+
+[node name="Dialog" type="RichTextLabel" parent="Output/AllOther/DiaWindow"]
+margin_top = 505.0
+margin_right = 1004.0
+margin_bottom = 546.0
+custom_styles/normal = SubResource( 1 )
+bbcode_enabled = true
+fit_content_height = true
+
+[node name="ChooseLine" type="HBoxContainer" parent="Output/AllOther/DiaWindow"]
+margin_top = 550.0
+margin_right = 1004.0
+margin_bottom = 550.0
+alignment = 1
+
+[node name="Consol" type="HBoxContainer" parent="Output/AllOther"]
+visible = false
+margin_left = 558.0
+margin_right = 1004.0
+margin_bottom = 550.0
+alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Output/AllOther/Consol"]
+margin_right = 446.0
+margin_bottom = 550.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Output/AllOther/Consol/MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 441.0
+margin_bottom = 545.0
+custom_styles/panel = ExtResource( 1 )
+
+[node name="Panels" type="HBoxContainer" parent="Output/AllOther/Consol/MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 441.0
+margin_bottom = 545.0
+
+[node name="VaribleInfo" type="VBoxContainer" parent="Output/AllOther/Consol/MarginContainer/Panels"]
+margin_right = 232.0
+margin_bottom = 540.0
+size_flags_horizontal = 0
+
+[node name="DefVaribles" type="Button" parent="Output/AllOther/Consol/MarginContainer/Panels/VaribleInfo"]
+margin_right = 232.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 200, 0 )
+text = "Сброс к значениям по-умолчанию"
+
+[node name="Scroll" type="ScrollContainer" parent="Output/AllOther/Consol/MarginContainer/Panels/VaribleInfo"]
+margin_top = 30.0
+margin_right = 232.0
+margin_bottom = 540.0
+size_flags_vertical = 3
+
+[node name="List" type="VBoxContainer" parent="Output/AllOther/Consol/MarginContainer/Panels/VaribleInfo/Scroll"]
+margin_right = 232.0
+margin_bottom = 510.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="OutputInfo" type="VBoxContainer" parent="Output/AllOther/Consol/MarginContainer/Panels"]
+margin_left = 236.0
+margin_right = 436.0
+margin_bottom = 540.0
+
+[node name="ClearSet" type="CheckBox" parent="Output/AllOther/Consol/MarginContainer/Panels/OutputInfo"]
+margin_right = 200.0
+margin_bottom = 28.0
+text = "Clear output on start"
+
+[node name="Output" type="RichTextLabel" parent="Output/AllOther/Consol/MarginContainer/Panels/OutputInfo"]
+margin_top = 32.0
+margin_right = 200.0
+margin_bottom = 540.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DD_CONTROL" type="Control" parent="."]
+visible = false
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 590.0
+
+[connection signal="visibility_changed" from="." to="." method="_on_Preview_visibility_changed"]
+[connection signal="pressed" from="Output/Line/StartBt" to="." method="_on_StartBt_pressed"]
+[connection signal="pressed" from="Output/Line/EndBt" to="." method="_on_EndBt_pressed"]
+[connection signal="item_selected" from="Output/Line/LangChangeBt" to="." method="_on_LangChangeBt_item_selected"]
+[connection signal="toggled" from="Output/Line/OutputBt" to="." method="_on_OutputBt_toggled"]
+[connection signal="pressed" from="Output/AllOther/Consol/MarginContainer/Panels/VaribleInfo/DefVaribles" to="." method="_on_DefVaribles_pressed"]
+[connection signal="toggled" from="Output/AllOther/Consol/MarginContainer/Panels/OutputInfo/ClearSet" to="." method="_on_ClearSet_toggled"]
+[connection signal="script_changed" from="DD_CONTROL" to="." method="_on_DD_CONTROL_script_changed"]

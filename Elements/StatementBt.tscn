@@ -1,0 +1,277 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Elements/IfStatement.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Elements/StatementBt.gd" type="Script" id=2]
+[ext_resource path="res://Elements/LogicVarible.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Other/PanelWithCorners.tres" type="StyleBox" id=5]
+
+[sub_resource type="StyleBoxFlat" id=7]
+content_margin_left = 5.0
+content_margin_right = 5.0
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color( 0.145098, 0.145098, 0.164706, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0.639216, 0.639216, 0.639216, 1 )
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 5.0
+expand_margin_right = 5.0
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends DragDropLogic
+
+func get_my_info() -> Array:
+	return [\"NOT\"]
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends DragDropLogic
+
+func get_my_info() -> Array:
+	return [\"AND\"]
+"
+
+[sub_resource type="GDScript" id=9]
+script/source = "extends DragDropLogic
+
+func get_my_info() -> Array:
+	return [\"OR\"]
+"
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends DragDropLogic
+
+func get_my_info() -> Array:
+	return [\"BRSO\"]
+"
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends DragDropLogic
+
+func get_my_info() -> Array:
+	return [\"BRSC\"]
+"
+
+[sub_resource type="StyleBoxFlat" id=8]
+content_margin_left = 5.0
+content_margin_right = 5.0
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color( 0.196078, 0.196078, 0.196078, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Panel
+
+func can_drop_data(position, data):
+	return is_instance_valid(data[1].get_my_root())
+
+func drop_data(position, data):
+	data[1].queue_free()
+"
+
+[node name="StatementBt" type="Button"]
+margin_right = 172.0
+margin_bottom = 29.0
+toggle_mode = true
+text = "Set statements..."
+script = ExtResource( 2 )
+
+[node name="StatementEditor" type="MarginContainer" parent="."]
+margin_left = 171.0
+margin_right = 660.0
+margin_bottom = 210.0
+size_flags_horizontal = 5
+size_flags_vertical = 5
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="StatementEditor"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 484.0
+margin_bottom = 205.0
+mouse_filter = 1
+custom_styles/panel = SubResource( 7 )
+
+[node name="Container" type="HBoxContainer" parent="StatementEditor"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 484.0
+margin_bottom = 205.0
+custom_constants/separation = 5
+
+[node name="Margin2" type="MarginContainer" parent="StatementEditor/Container"]
+margin_right = 174.0
+margin_bottom = 200.0
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="Blocks" type="VBoxContainer" parent="StatementEditor/Container/Margin2"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 174.0
+margin_bottom = 195.0
+
+[node name="DragDrops" type="VBoxContainer" parent="StatementEditor/Container/Margin2/Blocks"]
+margin_right = 169.0
+margin_bottom = 190.0
+size_flags_vertical = 3
+custom_constants/separation = 5
+
+[node name="Line1" type="HBoxContainer" parent="StatementEditor/Container/Margin2/Blocks/DragDrops"]
+margin_right = 169.0
+margin_bottom = 26.0
+custom_constants/separation = 10
+
+[node name="Not" type="Button" parent="StatementEditor/Container/Margin2/Blocks/DragDrops/Line1"]
+margin_right = 35.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+text = "NOT"
+script = SubResource( 1 )
+
+[node name="And" type="Button" parent="StatementEditor/Container/Margin2/Blocks/DragDrops/Line1"]
+margin_left = 45.0
+margin_right = 80.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+text = "AND"
+script = SubResource( 2 )
+
+[node name="Or" type="Button" parent="StatementEditor/Container/Margin2/Blocks/DragDrops/Line1"]
+margin_left = 90.0
+margin_right = 117.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+text = "OR"
+script = SubResource( 9 )
+
+[node name="BrascetsO" type="Button" parent="StatementEditor/Container/Margin2/Blocks/DragDrops/Line1"]
+margin_left = 127.0
+margin_right = 143.0
+margin_bottom = 26.0
+text = "("
+script = SubResource( 5 )
+
+[node name="BrascetsC" type="Button" parent="StatementEditor/Container/Margin2/Blocks/DragDrops/Line1"]
+margin_left = 153.0
+margin_right = 169.0
+margin_bottom = 26.0
+text = ")"
+script = SubResource( 6 )
+
+[node name="LogicVarible" parent="StatementEditor/Container/Margin2/Blocks/DragDrops" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 31.0
+margin_right = 169.0
+margin_bottom = 57.0
+
+[node name="HSeparator" type="HSeparator" parent="StatementEditor/Container/Margin2/Blocks/DragDrops"]
+margin_top = 62.0
+margin_right = 169.0
+margin_bottom = 66.0
+
+[node name="DelLabel" type="Label" parent="StatementEditor/Container/Margin2/Blocks/DragDrops"]
+margin_top = 71.0
+margin_right = 169.0
+margin_bottom = 130.0
+rect_min_size = Vector2( 0, 40 )
+size_flags_vertical = 3
+text = "Delete block"
+align = 1
+valign = 1
+
+[node name="DeletePlace" type="Panel" parent="StatementEditor/Container/Margin2/Blocks/DragDrops/DelLabel"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+custom_styles/panel = SubResource( 8 )
+script = SubResource( 3 )
+
+[node name="Label" type="Label" parent="StatementEditor/Container/Margin2/Blocks/DragDrops"]
+margin_top = 135.0
+margin_right = 169.0
+margin_bottom = 155.0
+size_flags_vertical = 8
+text = "Check:"
+
+[node name="ErrorString" type="MarginContainer" parent="StatementEditor/Container/Margin2/Blocks/DragDrops"]
+margin_top = 160.0
+margin_right = 169.0
+margin_bottom = 190.0
+size_flags_vertical = 8
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="WarnLabel" type="Label" parent="StatementEditor/Container/Margin2/Blocks/DragDrops/ErrorString"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 164.0
+margin_bottom = 25.0
+size_flags_vertical = 1
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+
+[node name="Panel" type="Panel" parent="StatementEditor/Container/Margin2/Blocks/DragDrops/ErrorString"]
+show_behind_parent = true
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 164.0
+margin_bottom = 25.0
+custom_styles/panel = ExtResource( 5 )
+
+[node name="Margin" type="MarginContainer" parent="StatementEditor/Container"]
+margin_left = 179.0
+margin_right = 479.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 300, 200 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="StatementEditor/Container/Margin"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 295.0
+margin_bottom = 195.0
+custom_styles/panel = ExtResource( 5 )
+
+[node name="Scroll" type="ScrollContainer" parent="StatementEditor/Container/Margin"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 295.0
+margin_bottom = 195.0
+scroll_horizontal_enabled = false
+
+[node name="IfStatement" parent="StatementEditor/Container/Margin/Scroll" instance=ExtResource( 1 )]
+margin_right = 290.0
+margin_bottom = 190.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="item_rect_changed" from="StatementEditor/Container" to="." method="_on_Container_item_rect_changed"]
+[connection signal="warned" from="StatementEditor/Container/Margin/Scroll/IfStatement" to="." method="_on_IfStatement_warned"]

@@ -1,0 +1,153 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Workspaces/GraphDialogEditor.gd" type="Script" id=1]
+[ext_resource path="res://GUI/LangChooseBt.tscn" type="PackedScene" id=2]
+
+[node name="DialogEditor" type="MarginContainer"]
+process_priority = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+script = ExtResource( 1 )
+
+[node name="Full" type="VBoxContainer" parent="."]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 1019.0
+margin_bottom = 595.0
+
+[node name="Settings" type="HBoxContainer" parent="Full"]
+margin_right = 1014.0
+margin_bottom = 26.0
+
+[node name="DialogOptions" type="MenuButton" parent="Full/Settings"]
+margin_right = 52.0
+margin_bottom = 26.0
+focus_mode = 2
+toggle_mode = false
+text = "Dialog"
+items = [ "Create...", null, 0, false, false, 0, 0, null, "", false, "Rename...", null, 0, false, false, 1, 0, null, "", false, "Delete", null, 0, false, false, 2, 0, null, "", false ]
+switch_on_hover = true
+
+[node name="DialogOptions2" type="MenuButton" parent="Full/Settings"]
+margin_left = 56.0
+margin_right = 180.0
+margin_bottom = 26.0
+focus_mode = 2
+toggle_mode = false
+text = "Settings visibility"
+items = [ "Show", null, 2, true, false, 0, 0, null, "", false, "Minimaze", null, 2, false, false, 1, 0, null, "", false, "Hide", null, 2, false, false, 2, 0, null, "", false ]
+switch_on_hover = true
+
+[node name="VSeparator" type="VSeparator" parent="Full/Settings"]
+margin_left = 184.0
+margin_right = 188.0
+margin_bottom = 26.0
+
+[node name="Space" type="Control" parent="Full/Settings"]
+margin_left = 192.0
+margin_right = 703.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+
+[node name="VSeparator2" type="VSeparator" parent="Full/Settings"]
+margin_left = 707.0
+margin_right = 711.0
+margin_bottom = 26.0
+
+[node name="LangLabel" type="Label" parent="Full/Settings"]
+margin_left = 715.0
+margin_top = 3.0
+margin_right = 796.0
+margin_bottom = 23.0
+text = "Localization:"
+
+[node name="LangChangeBt" parent="Full/Settings" instance=ExtResource( 2 )]
+margin_left = 800.0
+margin_right = 875.0
+text = "English"
+items = [ "English", null, false, 0, null ]
+selected = 0
+
+[node name="VSeparator3" type="VSeparator" parent="Full/Settings"]
+margin_left = 879.0
+margin_right = 883.0
+margin_bottom = 26.0
+
+[node name="CurLabel" type="Label" parent="Full/Settings"]
+margin_left = 887.0
+margin_top = 3.0
+margin_right = 981.0
+margin_bottom = 23.0
+text = "Current dialog:"
+
+[node name="DialogeChangeBt" type="OptionButton" parent="Full/Settings"]
+margin_left = 985.0
+margin_right = 1014.0
+margin_bottom = 26.0
+
+[node name="HSeparator" type="HSeparator" parent="Full"]
+margin_top = 30.0
+margin_right = 1014.0
+margin_bottom = 34.0
+
+[node name="EditZone" type="MarginContainer" parent="Full"]
+margin_top = 38.0
+margin_right = 1014.0
+margin_bottom = 590.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Map" type="GraphEdit" parent="Full/EditZone"]
+margin_right = 1014.0
+margin_bottom = 552.0
+size_flags_vertical = 3
+scroll_offset = Vector2( -342, -278 )
+snap_distance = 10
+use_snap = false
+zoom_min = 0.2
+zoom_max = 3.0
+show_zoom_label = true
+
+[node name="MapMenu" type="PopupMenu" parent="Full/EditZone"]
+margin_right = 1014.0
+margin_bottom = 552.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="AddMenu" type="PopupMenu" parent="Full/EditZone/MapMenu"]
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="Blocker" type="ColorRect" parent="Full/EditZone"]
+visible = false
+margin_right = 1014.0
+margin_bottom = 552.0
+mouse_filter = 1
+color = Color( 1, 1, 1, 0.156863 )
+
+[node name="Warning" type="Label" parent="Full/EditZone/Blocker"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "No dialogs!
+Make at least one..."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[connection signal="visibility_changed" from="." to="." method="_on_DialogEditor_visibility_changed"]
+[connection signal="item_selected" from="Full/Settings/LangChangeBt" to="." method="_on_LangChangeBt_item_selected"]
+[connection signal="item_selected" from="Full/Settings/DialogeChangeBt" to="." method="_on_DialogeChangeBt_item_selected"]
+[connection signal="child_exiting_tree" from="Full/EditZone/Map" to="." method="_on_Map_child_exiting_tree"]
+[connection signal="connection_from_empty" from="Full/EditZone/Map" to="." method="_on_Map_connection_from_empty"]
+[connection signal="connection_request" from="Full/EditZone/Map" to="." method="_on_Map_connection_request"]
+[connection signal="connection_to_empty" from="Full/EditZone/Map" to="." method="_on_Map_connection_to_empty"]
+[connection signal="disconnection_request" from="Full/EditZone/Map" to="." method="_on_Map_disconnection_request"]
+[connection signal="node_selected" from="Full/EditZone/Map" to="." method="_on_Map_node_selected"]
+[connection signal="node_unselected" from="Full/EditZone/Map" to="." method="_on_Map_node_unselected"]
+[connection signal="index_pressed" from="Full/EditZone/MapMenu" to="." method="_on_MapMenu_index_pressed"]
+[connection signal="id_pressed" from="Full/EditZone/MapMenu/AddMenu" to="." method="_on_AddMenu_id_pressed"]

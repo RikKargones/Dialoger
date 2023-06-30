@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Workspaces/PersonsEditor.gd" type="Script" id=1]
+
+[node name="PersonsEditor" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+script = ExtResource( 1 )
+
+[node name="Full" type="VBoxContainer" parent="."]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 1019.0
+margin_bottom = 595.0
+custom_constants/separation = 10
+
+[node name="AddBt" type="Button" parent="Full"]
+margin_right = 1014.0
+margin_bottom = 26.0
+text = "Добавить персонажа..."
+
+[node name="List" type="TabContainer" parent="Full"]
+margin_top = 36.0
+margin_right = 1014.0
+margin_bottom = 590.0
+size_flags_vertical = 3
+tab_align = 0
+
+[connection signal="visibility_changed" from="." to="." method="_on_PersonsProfiles_visibility_changed"]
+[connection signal="pressed" from="Full/AddBt" to="." method="_on_AddBt_pressed"]

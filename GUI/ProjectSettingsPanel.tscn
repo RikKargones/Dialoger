@@ -1,0 +1,211 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://GUI/LangChooseBt.tscn" type="PackedScene" id=3]
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Button
+
+func _pressed():
+	if ProjectManager.project_name != \"\":
+		SaveManager.save_project()
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends HBoxContainer
+
+onready var mirror_left_bt 		= $LeftCheck
+onready var mirror_right_bt		= $RightCheck
+onready var mirror_center_bt	= $CenterCheck
+
+func _ready():
+	if !mirror_left_bt.pressed && !mirror_right_bt.pressed:
+		mirror_left_bt.pressed = true
+
+func _on_LeftCheck_toggled(button_pressed):
+	mirror_right_bt.pressed = !button_pressed
+	update_globals()
+
+func _on_RightCheck_toggled(button_pressed):
+	mirror_left_bt.pressed = !button_pressed
+	update_globals()
+
+func _on_CenterCheck_toggled(button_pressed):
+	update_globals()
+
+func update_globals():
+	Defaluts.preview_miror_left		= mirror_left_bt.pressed
+	Defaluts.preview_miror_right	= mirror_right_bt.pressed
+	Defaluts.preview_miror_center 	= mirror_center_bt.pressed
+"
+
+[node name="ProjectSettings" type="VBoxContainer"]
+margin_right = 1014.0
+margin_bottom = 207.0
+
+[node name="File" type="HBoxContainer" parent="."]
+margin_right = 1014.0
+margin_bottom = 26.0
+
+[node name="ExportBt" type="Button" parent="File"]
+margin_right = 60.0
+margin_bottom = 26.0
+text = "Export..."
+
+[node name="VSeparator" type="VSeparator" parent="File"]
+margin_left = 64.0
+margin_right = 68.0
+margin_bottom = 26.0
+
+[node name="SaveBt" type="Button" parent="File"]
+margin_left = 72.0
+margin_right = 164.0
+margin_bottom = 26.0
+text = "Save Project"
+script = SubResource( 3 )
+
+[node name="SaveAsBt" type="Button" parent="File"]
+margin_left = 168.0
+margin_right = 289.0
+margin_bottom = 26.0
+text = "Save Project As..."
+
+[node name="VSeparator2" type="VSeparator" parent="File"]
+margin_left = 293.0
+margin_right = 297.0
+margin_bottom = 26.0
+
+[node name="Label" type="Label" parent="File"]
+margin_left = 301.0
+margin_top = 3.0
+margin_right = 1014.0
+margin_bottom = 23.0
+size_flags_horizontal = 3
+text = "Changed! Last saved: 12.02.2023 12:00"
+align = 2
+
+[node name="HSeparator" type="HSeparator" parent="."]
+margin_top = 30.0
+margin_right = 1014.0
+margin_bottom = 34.0
+rect_pivot_offset = Vector2( -379, -278 )
+
+[node name="Fileds" type="GridContainer" parent="."]
+margin_top = 38.0
+margin_right = 1014.0
+margin_bottom = 198.0
+columns = 2
+
+[node name="Label" type="Label" parent="Fileds"]
+margin_top = 4.0
+margin_right = 790.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Miror textures in preview on positions:"
+
+[node name="Mirors" type="HBoxContainer" parent="Fileds"]
+margin_left = 794.0
+margin_right = 1014.0
+margin_bottom = 28.0
+script = SubResource( 2 )
+
+[node name="LeftCheck" type="CheckBox" parent="Fileds/Mirors"]
+margin_right = 52.0
+margin_bottom = 28.0
+text = "Left"
+
+[node name="HSeparator" type="HSeparator" parent="Fileds/Mirors"]
+margin_left = 56.0
+margin_right = 76.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 20, 0 )
+
+[node name="RightCheck" type="CheckBox" parent="Fileds/Mirors"]
+margin_left = 80.0
+margin_right = 140.0
+margin_bottom = 28.0
+text = "Right"
+
+[node name="VSeparator" type="VSeparator" parent="Fileds/Mirors"]
+margin_left = 144.0
+margin_right = 148.0
+margin_bottom = 28.0
+
+[node name="CenterCheck" type="CheckBox" parent="Fileds/Mirors"]
+margin_left = 152.0
+margin_right = 220.0
+margin_bottom = 28.0
+text = "Center"
+
+[node name="Label2" type="Label" parent="Fileds"]
+margin_top = 35.0
+margin_right = 790.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+text = "Defalut language:"
+
+[node name="LangChangeBt" parent="Fileds" instance=ExtResource( 3 )]
+margin_left = 794.0
+margin_top = 32.0
+margin_right = 1014.0
+margin_bottom = 58.0
+rect_min_size = Vector2( 150, 0 )
+
+[node name="Label3" type="Label" parent="Fileds"]
+margin_top = 67.0
+margin_right = 790.0
+margin_bottom = 87.0
+size_flags_horizontal = 3
+text = "Max lines in one replick:"
+
+[node name="MaxLinesCount" type="SpinBox" parent="Fileds"]
+margin_left = 794.0
+margin_top = 62.0
+margin_right = 1014.0
+margin_bottom = 92.0
+rect_min_size = Vector2( 150, 0 )
+max_value = 8.0
+value = 4.0
+align = 1
+suffix = "lines"
+
+[node name="Label4" type="Label" parent="Fileds"]
+margin_top = 101.0
+margin_right = 790.0
+margin_bottom = 121.0
+size_flags_horizontal = 3
+text = "Max symbols per line in one replick:"
+
+[node name="MaxSymbolsCount" type="SpinBox" parent="Fileds"]
+margin_left = 794.0
+margin_top = 96.0
+margin_right = 1014.0
+margin_bottom = 126.0
+rect_min_size = Vector2( 150, 0 )
+max_value = 400.0
+step = 10.0
+value = 100.0
+align = 1
+suffix = "symbols"
+
+[node name="Label5" type="Label" parent="Fileds"]
+margin_top = 135.0
+margin_right = 790.0
+margin_bottom = 155.0
+size_flags_horizontal = 3
+text = "New font size by defalut:"
+
+[node name="FontSizeCount" type="SpinBox" parent="Fileds"]
+margin_left = 794.0
+margin_top = 130.0
+margin_right = 1014.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 150, 0 )
+min_value = 16.0
+max_value = 72.0
+value = 16.0
+align = 1
+suffix = "px"
+
+[connection signal="toggled" from="Fileds/Mirors/LeftCheck" to="Fileds/Mirors" method="_on_LeftCheck_toggled"]
+[connection signal="toggled" from="Fileds/Mirors/RightCheck" to="Fileds/Mirors" method="_on_RightCheck_toggled"]
+[connection signal="toggled" from="Fileds/Mirors/CenterCheck" to="Fileds/Mirors" method="_on_CenterCheck_toggled"]

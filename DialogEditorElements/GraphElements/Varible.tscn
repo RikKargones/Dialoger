@@ -1,0 +1,209 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://GUI/VaribleSelector.tscn" type="PackedScene" id=1]
+[ext_resource path="res://DialogEditorElements/GraphElements/Varible.gd" type="Script" id=2]
+[ext_resource path="res://Other/MiniTheme.tres" type="Theme" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="ButtonGroup" id=2]
+
+[sub_resource type="ButtonGroup" id=3]
+
+[node name="Varible" type="GraphNode"]
+margin_right = 170.0
+margin_bottom = 74.0
+mouse_filter = 2
+theme = ExtResource( 3 )
+title = "Varible change"
+show_close = true
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 2 )
+
+[node name="Settings" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 197.0
+margin_bottom = 68.0
+
+[node name="Varible" type="VBoxContainer" parent="Settings"]
+margin_right = 59.0
+margin_bottom = 44.0
+
+[node name="Label" type="Label" parent="Settings/Varible"]
+margin_right = 59.0
+margin_bottom = 17.0
+mouse_filter = 1
+text = "Переменная:"
+
+[node name="VaribleSelector" parent="Settings/Varible" instance=ExtResource( 1 )]
+margin_left = 0.0
+margin_top = 21.0
+margin_right = 59.0
+margin_bottom = 44.0
+size_flags_vertical = 4
+
+[node name="VSeparator" type="VSeparator" parent="Settings"]
+margin_left = 63.0
+margin_right = 67.0
+margin_bottom = 44.0
+mouse_filter = 1
+
+[node name="TabContainer" type="TabContainer" parent="Settings"]
+margin_left = 71.0
+margin_top = 3.0
+margin_right = 181.0
+margin_bottom = 40.0
+mouse_filter = 1
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_styles/panel = SubResource( 1 )
+tabs_visible = false
+
+[node name="Empty" type="Label" parent="Settings/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+size_flags_horizontal = 3
+text = "Выберете переменную
+для работы!"
+align = 1
+
+[node name="BoolSettings" type="VBoxContainer" parent="Settings/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Reverse" type="Button" parent="Settings/TabContainer/BoolSettings"]
+margin_right = 145.0
+margin_bottom = 23.0
+mouse_filter = 1
+toggle_mode = true
+group = SubResource( 2 )
+text = "Переключить"
+
+[node name="HSeparator" type="HSeparator" parent="Settings/TabContainer/BoolSettings"]
+margin_top = 27.0
+margin_right = 145.0
+margin_bottom = 31.0
+mouse_filter = 1
+
+[node name="SetSettings" type="HBoxContainer" parent="Settings/TabContainer/BoolSettings"]
+margin_top = 35.0
+margin_right = 145.0
+margin_bottom = 75.0
+
+[node name="Set" type="Button" parent="Settings/TabContainer/BoolSettings/SetSettings"]
+margin_right = 65.0
+margin_bottom = 40.0
+mouse_filter = 1
+toggle_mode = true
+pressed = true
+group = SubResource( 2 )
+text = "Установить"
+
+[node name="SetBt" type="CheckButton" parent="Settings/TabContainer/BoolSettings/SetSettings"]
+margin_left = 69.0
+margin_right = 145.0
+margin_bottom = 40.0
+mouse_filter = 1
+size_flags_horizontal = 6
+
+[node name="IntSettings" type="VBoxContainer" parent="Settings/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="PaM" type="HBoxContainer" parent="Settings/TabContainer/IntSettings"]
+margin_right = 176.0
+margin_bottom = 27.0
+
+[node name="Plus" type="Button" parent="Settings/TabContainer/IntSettings/PaM"]
+margin_right = 63.0
+margin_bottom = 27.0
+mouse_filter = 1
+toggle_mode = true
+pressed = true
+group = SubResource( 3 )
+text = "Прибавить"
+
+[node name="Minus" type="Button" parent="Settings/TabContainer/IntSettings/PaM"]
+margin_left = 67.0
+margin_right = 110.0
+margin_bottom = 27.0
+mouse_filter = 1
+toggle_mode = true
+group = SubResource( 3 )
+text = "Отнять"
+
+[node name="FixedFiled" type="SpinBox" parent="Settings/TabContainer/IntSettings/PaM"]
+margin_left = 114.0
+margin_right = 176.0
+margin_bottom = 27.0
+mouse_filter = 1
+min_value = 1.0
+value = 1.0
+allow_greater = true
+
+[node name="HSeparator" type="HSeparator" parent="Settings/TabContainer/IntSettings"]
+margin_top = 31.0
+margin_right = 176.0
+margin_bottom = 35.0
+mouse_filter = 1
+
+[node name="Set" type="Button" parent="Settings/TabContainer/IntSettings"]
+margin_top = 39.0
+margin_right = 176.0
+margin_bottom = 62.0
+mouse_filter = 1
+toggle_mode = true
+group = SubResource( 3 )
+text = "Установить"
+
+[node name="SetFiled" type="SpinBox" parent="Settings/TabContainer/IntSettings"]
+margin_top = 66.0
+margin_right = 176.0
+margin_bottom = 93.0
+mouse_filter = 1
+min_value = -9999.0
+max_value = 9999.0
+allow_greater = true
+allow_lesser = true
+
+[node name="StringSettings" type="LineEdit" parent="Settings/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 150, 0 )
+mouse_filter = 1
+size_flags_horizontal = 4
+expand_to_text_length = true
+context_menu_enabled = false
+
+[node name="SignalSettings" type="VBoxContainer" parent="Settings/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="Settings/TabContainer/SignalSettings"]
+margin_right = 150.0
+margin_bottom = 17.0
+mouse_filter = 1
+text = "Вызов сигнала с аргументами:"
+
+[node name="Arguments" type="LineEdit" parent="Settings/TabContainer/SignalSettings"]
+margin_top = 21.0
+margin_right = 150.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 150, 0 )
+mouse_filter = 1
+size_flags_horizontal = 0
+expand_to_text_length = true
+
+[connection signal="item_selected" from="Settings/Varible/VaribleSelector" to="." method="_on_VaribleSelector_item_selected"]

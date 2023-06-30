@@ -1,0 +1,142 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Other/PanelWithCorners.tres" type="StyleBox" id=1]
+[ext_resource path="res://Elements/PersonProfile.gd" type="Script" id=2]
+[ext_resource path="res://GUI/FontChoose.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GUI/Align.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GUI/LangChooseBt.tscn" type="PackedScene" id=5]
+
+[node name="PersonProfile" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+script = ExtResource( 2 )
+
+[node name="Moods" type="HBoxContainer" parent="."]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 590.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 15
+
+[node name="Settings" type="VBoxContainer" parent="Moods"]
+margin_right = 150.0
+margin_bottom = 580.0
+custom_constants/separation = 10
+alignment = 1
+
+[node name="Label5" type="Label" parent="Moods/Settings"]
+margin_right = 150.0
+margin_bottom = 20.0
+text = "For langauge:"
+align = 1
+
+[node name="LangChangeBt" parent="Moods/Settings" instance=ExtResource( 5 )]
+margin_top = 30.0
+margin_right = 150.0
+margin_bottom = 56.0
+text = "English"
+items = [ "English", null, false, 0, null ]
+selected = 0
+
+[node name="Label" type="Label" parent="Moods/Settings"]
+margin_top = 66.0
+margin_right = 150.0
+margin_bottom = 86.0
+text = "Person name in dialog:"
+align = 1
+valign = 1
+
+[node name="DialogName" type="LineEdit" parent="Moods/Settings"]
+margin_top = 96.0
+margin_right = 150.0
+margin_bottom = 126.0
+align = 1
+
+[node name="Label2" type="Label" parent="Moods/Settings"]
+margin_top = 136.0
+margin_right = 150.0
+margin_bottom = 156.0
+text = "Defalut font:"
+align = 1
+
+[node name="FontChoose" parent="Moods/Settings" instance=ExtResource( 3 )]
+margin_top = 166.0
+margin_right = 150.0
+margin_bottom = 192.0
+
+[node name="VSeparator6" type="HSeparator" parent="Moods/Settings"]
+margin_top = 202.0
+margin_right = 150.0
+margin_bottom = 206.0
+
+[node name="Label4" type="Label" parent="Moods/Settings"]
+margin_top = 216.0
+margin_right = 150.0
+margin_bottom = 236.0
+text = "Position in dialog:"
+align = 1
+autowrap = true
+
+[node name="Align" parent="Moods/Settings" instance=ExtResource( 4 )]
+margin_top = 246.0
+margin_right = 150.0
+margin_bottom = 272.0
+align = 1
+items = [ "Left", null, false, 0, null, "Center", null, false, 1, null, "Right", null, false, 2, null ]
+
+[node name="VSeparator8" type="HSeparator" parent="Moods/Settings"]
+margin_top = 282.0
+margin_right = 150.0
+margin_bottom = 286.0
+
+[node name="AddBt" type="Button" parent="Moods/Settings"]
+margin_top = 296.0
+margin_right = 150.0
+margin_bottom = 322.0
+text = "Add new emotion..."
+
+[node name="VSeparator7" type="HSeparator" parent="Moods/Settings"]
+margin_top = 540.0
+margin_right = 150.0
+margin_bottom = 544.0
+size_flags_vertical = 10
+
+[node name="Delete" type="Button" parent="Moods/Settings"]
+margin_top = 554.0
+margin_right = 150.0
+margin_bottom = 580.0
+text = "Delete"
+
+[node name="Moods" type="MarginContainer" parent="Moods"]
+margin_left = 165.0
+margin_right = 1004.0
+margin_bottom = 580.0
+size_flags_horizontal = 7
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="Moods/Moods"]
+modulate = Color( 0.8, 0.8, 0.8, 1 )
+margin_right = 839.0
+margin_bottom = 580.0
+custom_styles/panel = ExtResource( 1 )
+
+[node name="Scroll" type="ScrollContainer" parent="Moods/Moods"]
+margin_right = 839.0
+margin_bottom = 580.0
+scroll_horizontal_enabled = false
+
+[node name="Grid" type="GridContainer" parent="Moods/Moods/Scroll"]
+columns = 4
+
+[connection signal="item_selected" from="Moods/Settings/LangChangeBt" to="." method="_on_LangChangeBt_item_selected"]
+[connection signal="text_changed" from="Moods/Settings/DialogName" to="." method="_on_DialogName_text_changed"]
+[connection signal="item_selected" from="Moods/Settings/FontChoose" to="." method="_on_FontChoose_item_selected"]
+[connection signal="pressed" from="Moods/Settings/AddBt" to="." method="_on_AddBt_pressed"]
+[connection signal="pressed" from="Moods/Settings/Delete" to="." method="_on_Delete_pressed"]
+[connection signal="child_exiting_tree" from="Moods/Moods/Scroll/Grid" to="." method="_on_Grid_child_exiting_tree"]

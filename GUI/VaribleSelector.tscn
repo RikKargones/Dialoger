@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=5]
+resource_local_to_scene = true
+script/source = "extends OptionButton
+
+export var ban_signal 	= false
+
+var banned_vars 		= []
+
+func _ready():
+	update_selector()
+	ProjectManager.connect(\"varibles_updated\", self, \"update_selector\")
+	
+func update_selector():
+	var all_vars = ProjectManager.get_all_varibles()
+	
+	for ban in banned_vars:
+		if Global.is_varible_in_atlas(ban):
+			all_vars.erase(ban)
+		else:
+			banned_vars.erase(ban)
+	
+	if ban_signal:
+		for key in all_vars.keys():
+			if all_vars[key][0] == \"Signal\":
+				all_vars.erase(key)
+	
+	Global.update_selector(self, [\"- Не выбрано -\"] + all_vars.keys())
+
+func set_banned_varibles(ban_arr : Array):
+	banned_vars = ban_arr
+	update_selector()
+
+func ban_signals(on : bool):
+	ban_signal = on
+"
+
+[node name="VaribleSelector" type="OptionButton"]
+margin_left = 82.0
+margin_right = 111.0
+margin_bottom = 580.0
+script = SubResource( 5 )
