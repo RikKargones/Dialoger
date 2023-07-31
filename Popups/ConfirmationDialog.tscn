@@ -3,11 +3,22 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends ConfirmationDialog
 
+var confurm_catcher : FuncRef
+
 func _ready():
 	dialog_text = \"\"
 
-func set_text_centred(text):
+func set_information(func_catcher : FuncRef, text : String):
 	$Text.text = text
+	confurm_catcher = func_catcher
+	set_as_minsize()
+	popup_centered()
+
+func _on_ConfirmationDialog_confirmed():
+	if is_instance_valid(confurm_catcher) && confurm_catcher.is_valid():
+		confurm_catcher.call_func()
+	yield(get_tree(), \"idle_frame\")
+	queue_free()
 "
 
 [node name="ConfirmationDialog" type="ConfirmationDialog"]
@@ -24,3 +35,5 @@ margin_right = 266.0
 margin_bottom = 28.0
 align = 1
 valign = 1
+
+[connection signal="confirmed" from="." to="." method="_on_ConfirmationDialog_confirmed"]

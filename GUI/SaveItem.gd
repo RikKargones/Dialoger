@@ -57,7 +57,7 @@ func set_savefile(path : String):
 					
 			path_line.text = path.rsplit("/", true, 1)[0]
 		else:
-			print("Save information is broken!")
+			Global.popup_error("Save information is broken!")
 			queue_free()
 	else:
 		go_delete()

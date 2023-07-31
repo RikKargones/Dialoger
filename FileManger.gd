@@ -10,7 +10,7 @@ func get_temp_file_path(file_name : String):
 		return ""
 
 #func checking is file are new (copy to specified folder in temp_folder if it is) and returns it's name in files_list
-func register_temp_file(path_to_file : String, path_to_dir : String):
+func register_temp_file(path_to_file : String, path_to_dir : String) -> Array:
 	var dir_manager 	= Directory.new()
 	var file_handler	= File.new()
 	var file : String	= path_to_file.rsplit("/", true, 1)[1]
@@ -48,6 +48,7 @@ func register_temp_file(path_to_file : String, path_to_dir : String):
 		
 		dir_manager.copy(path_to_file, path_to_dir + "/" + file)
 		files_list[file] = [path_to_dir, 1]
+		
 		return [file, path_to_dir]
 	else:
 		print("ERROR! File not found...")

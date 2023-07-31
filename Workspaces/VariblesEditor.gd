@@ -5,44 +5,37 @@ onready var list = $Editor/Scroll/List
 onready var pck_varible = preload("res://Elements/VaribleElement.tscn")
 
 func _ready():
-	ProjectManager.set_varibles_collector(funcref(self, "update_global_atlas"))
-	ProjectManager.connect("clear_project", self, "clear_data")
-	SaveManager.var_update_funcref = funcref(self, "set_varibles")
+	VariblesData.connect("refresh_data", self, "on_data_refresh")
 
-func clear_data():
-	for node in list.get_children():
-		node.queue_free()
-
-func _physics_process(delta):
-	Global.add_name_meta(list.get_children(), "get_name", true)
-
-func _on_Add_Bt_pressed():
-	var names = []
-	
-	for child in list.get_children():
-		names.append(child.get_name())
-	
-	Global.name_something(funcref(self, "make_new_varible"), "Укажите уникальное название переменной!", names, true)
-
-func set_varibles():
-	for varible in ProjectManager.varibles_atlas.keys():
-		make_new_varible(varible)
-		list.get_children()[list.get_child_count()-1].set_info(ProjectManager.varibles_atlas[varible])
-	
 func make_new_varible(new_name : String):
-	var new_varible = pck_varible.instance()
-	list.add_child(new_varible)
-	new_varible.set_name(new_name)
+	var new_var = pck_varible.instance()
+	list.add_child(new_var)
+	new_var.set_name(new_name)
+	new_var.connect("delited", VariblesData, "delete_varible")
+	new_var.connect("changed_type", VariblesData, "set_varible")
+	return new_var
 
-func update_global_atlas():
-	var data = {}
+func update_element_silent(elem : VaribleElement):
+	elem.disconnect("changed_type", VariblesData, "set_varible")
+	elem.set_value(VariblesData.get_initial_value(elem.get_name()))
+	elem.connect("changed_type", VariblesData, "set_varible")
+
+func on_data_refresh():
+	var var_list = VariblesData.get_varibles_list()
 	
-	for child in list.get_children():
-		if !child.is_in_warning():
-			var child_data = child.get_info()
-			data[child_data[0]] = [child_data[1], child_data[2]]
-		
-	ProjectManager.update_varibles_atlas(data)
+	for elem_var in list.get_children():
+		if elem_var is VaribleElement:
+			var var_name = elem_var.get_name()
+			
+			if var_name in var_list:
+				update_element_silent(elem_var)
+				var_list.erase(var_name)
+			else:
+				elem_var.disconnect("delited", VariblesData, "delete_varible")
+				elem_var.queue_free()
+	
+	for varible in var_list:
+		update_element_silent(make_new_varible(varible))
 
-func _on_VariblesEditor_visibility_changed():
-	update_global_atlas()
+func _on_Add_Bt_pressed():	
+	Global.name_something(funcref(self, "make_new_varible"), "Укажите уникальное название переменной!", VariblesData.get_varibles_list(), true)

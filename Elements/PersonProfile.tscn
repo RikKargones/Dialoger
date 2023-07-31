@@ -137,6 +137,7 @@ columns = 4
 [connection signal="item_selected" from="Moods/Settings/LangChangeBt" to="." method="_on_LangChangeBt_item_selected"]
 [connection signal="text_changed" from="Moods/Settings/DialogName" to="." method="_on_DialogName_text_changed"]
 [connection signal="item_selected" from="Moods/Settings/FontChoose" to="." method="_on_FontChoose_item_selected"]
+[connection signal="item_selected" from="Moods/Settings/Align" to="." method="_on_Align_item_selected"]
 [connection signal="pressed" from="Moods/Settings/AddBt" to="." method="_on_AddBt_pressed"]
 [connection signal="pressed" from="Moods/Settings/Delete" to="." method="_on_Delete_pressed"]
 [connection signal="child_exiting_tree" from="Moods/Moods/Scroll/Grid" to="." method="_on_Grid_child_exiting_tree"]

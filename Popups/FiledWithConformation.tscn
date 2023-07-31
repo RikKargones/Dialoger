@@ -3,8 +3,10 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends ConfirmationDialog
 
-var no_spaces = false
-var unacessable_names = []
+var func_catcher : FuncRef
+
+var no_spaces 			= false
+var unacessable_names 	= []
 
 onready var error_label 	= $MarginContainer/VBoxContainer/ErrorLabel
 onready var new_name_line 	= $MarginContainer/VBoxContainer/LineEdit
@@ -14,9 +16,12 @@ func _physics_process(delta):
 		set_as_minsize()
 		
 		get_ok().disabled = error_label.visible
-		
-func set_unacessable_names(array : Array):
-	unacessable_names = array
+
+func set_information(func_ref : FuncRef, message_text : String, names : Array = [], no_spaces = false):
+	func_catcher = func_ref
+	window_title = message_text
+	no_spaces = no_spaces
+	unacessable_names = names
 
 func get_filed_content():
 	return new_name_line.text
@@ -50,6 +55,12 @@ func _on_LineEdit_text_changed(new_text : String):
 
 func _on_NameConformation_about_to_show():
 	_on_LineEdit_text_changed(new_name_line.text)
+
+func _on_NameConformation_popup_hide():
+	if is_instance_valid(func_catcher) && func_catcher.is_valid():
+		func_catcher.call_func(get_filed_content())
+		clear_filed_content()
+	queue_free()
 "
 
 [node name="NameConformation" type="ConfirmationDialog"]
@@ -98,4 +109,5 @@ text = "Error!"
 align = 1
 
 [connection signal="about_to_show" from="." to="." method="_on_NameConformation_about_to_show"]
+[connection signal="popup_hide" from="." to="." method="_on_NameConformation_popup_hide"]
 [connection signal="text_changed" from="MarginContainer/VBoxContainer/LineEdit" to="." method="_on_LineEdit_text_changed"]

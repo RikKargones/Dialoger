@@ -165,21 +165,25 @@ func update_moods(person_name : String):
 	Global.update_selector(mood_chooser, list)
 
 func update_font_placeholders():
+	var current_lang = lang_variants.get_current_lang()
 	dialog_name.text = name_changer.text + ":"
 	
-	if name_changer.text == name_changer.get_placeholder() && ProjectManager.is_lang_in_atlas(lang_variants.get_current_lang()):
+	if name_changer.text == name_changer.get_placeholder() && ProjectManager.is_lang_in_atlas(current_lang):
 		font_chooser.set_def_placeholder()
+		current_lang = lang_variants.get_current_lang()
+		var font_name = ProjectManager.get_lang_font_by_name(current_lang)
 		
-		if ProjectManager.is_font_in_atlas(ProjectManager.get_all_langs()[lang_variants.get_current_lang()]):
-			font_chooser.set_def_placeholder(font_chooser.def_placeholder, ProjectManager.get_font_by_name(ProjectManager.get_all_langs()[lang_variants.get_current_lang()]))
+		if ProjectManager.is_font_in_atlas(font_name):
+			font_chooser.set_def_placeholder(font_chooser.def_placeholder, ProjectManager.get_font_by_name(font_name))
 	
 	elif ProjectManager.is_person_in_atlas(name_changer.text):
 		var person = ProjectManager.get_person_by_name(name_changer.text)
+		var person_font_name = person["Fonts"][current_lang]
 		
-		if ProjectManager.is_font_in_atlas(person["Fonts"][lang_variants.get_current_lang()]):
-			font_chooser.set_def_placeholder("<Персонажа>", ProjectManager.get_font_by_name(person["Fonts"][lang_variants.get_current_lang()]))
-		elif ProjectManager.is_lang_in_atlas(current_lang) && ProjectManager.is_font_in_atlas(ProjectManager.get_all_langs()[current_lang]):
-			font_chooser.set_def_placeholder("<Персонажа>", ProjectManager.get_font_by_name(ProjectManager.get_all_langs()[current_lang]))
+		if ProjectManager.is_font_in_atlas(person_font_name):
+			font_chooser.set_def_placeholder("<Персонажа>", ProjectManager.get_font_by_name(person_font_name))
+		elif ProjectManager.is_lang_in_atlas(current_lang) && ProjectManager.is_font_in_atlas(ProjectManager.get_lang_font_by_name(current_lang)):
+			font_chooser.set_def_placeholder("<Персонажа>", ProjectManager.get_font_by_name(ProjectManager.get_lang_font_by_name(current_lang)))
 		else:
 			font_chooser.set_def_placeholder("<Персонажа>", null)
 			

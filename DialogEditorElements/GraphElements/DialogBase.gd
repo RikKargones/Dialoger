@@ -65,7 +65,6 @@ func _process(delta):
 		if Input.is_action_just_released("mouse_right_button"):
 			emit_signal("right_clicked", self)
 			
-
 func on_ready():
 	return
 

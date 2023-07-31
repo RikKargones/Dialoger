@@ -1,0 +1,75 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GUI/ElementList.gd" type="Script" id=1]
+
+[node name="ElementList" type="Container"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+script = ExtResource( 1 )
+separation_h = 5
+separation_v = 5
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 400 )
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 400 )
+
+[node name="ColorRect10" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 400 )
+
+[node name="ColorRect12" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 400 )
+
+[node name="ColorRect13" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 400 )
+color = Color( 0.52549, 0.231373, 0.231373, 1 )
+
+[node name="ColorRect14" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 400 )
+
+[node name="ColorRect15" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 400 )
+
+[node name="ColorRect16" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 400 )
+
+[node name="ColorRect17" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 400 )
+
+[node name="ColorRect18" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 400 )
+
+[node name="ColorRect19" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 400 )
+
+[node name="ColorRect11" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 400 )
+color = Color( 0.360784, 0.0941176, 0.0941176, 1 )
+
+[connection signal="sort_children" from="." to="." method="_on_ElementList_sort_children"]

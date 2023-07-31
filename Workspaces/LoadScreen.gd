@@ -19,10 +19,8 @@ func _ready():
 func update_list(paths : Array):
 	for child in save_list.get_children():
 		if child.has_method("get_savefile_path"):
-			if child.get_savefile_path() in paths:
-				paths.erase(child.get_savefile_path())
-			else:
-				child.queue_free()
+			if child.get_savefile_path() in paths: paths.erase(child.get_savefile_path())
+			else: child.queue_free()
 	
 	for path in paths:
 		create_save(path)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Workspaces/LocalsaionEditor.gd" type="Script" id=1]
+[ext_resource path="res://Workspaces/NewLocalEdit.gd" type="Script" id=1]
 
 [node name="LocalsaionEditor" type="MarginContainer"]
 anchor_right = 1.0
@@ -17,25 +17,16 @@ margin_top = 5.0
 margin_right = 1019.0
 margin_bottom = 595.0
 
-[node name="AddBt" type="Button" parent="Full"]
-margin_right = 1014.0
-margin_bottom = 26.0
-text = "Add langauge..."
-
-[node name="HSeparator" type="HSeparator" parent="Full"]
-margin_top = 30.0
-margin_right = 1014.0
-margin_bottom = 34.0
-
-[node name="List" type="HFlowContainer" parent="Full"]
-margin_top = 38.0
+[node name="Scroll" type="ScrollContainer" parent="Full"]
 margin_right = 1014.0
 margin_bottom = 590.0
+size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/vseparation = 10
-custom_constants/hseparation = 10
+scroll_horizontal_enabled = false
 
-[connection signal="visibility_changed" from="." to="." method="_on_LocalsaionEditor_visibility_changed"]
-[connection signal="pressed" from="Full/AddBt" to="." method="_on_AddBt_pressed"]
-[connection signal="child_entered_tree" from="Full/List" to="." method="_on_List_child_entered_tree"]
-[connection signal="child_exiting_tree" from="Full/List" to="." method="_on_List_child_exiting_tree"]
+[node name="LangList" type="GridContainer" parent="Full/Scroll"]
+margin_right = 1014.0
+margin_bottom = 590.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3

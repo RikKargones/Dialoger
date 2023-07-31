@@ -4,7 +4,9 @@ var fonts_atlas 	= {}
 var persons_atlas 	= {}
 var dialog_atlas	= {}
 var varibles_atlas	= {}
-var font_lang_atlas	= {"English" : "", "Russian" : ""}
+var font_lang_atlas	= {"English" : [Translation.new(), ""]}
+
+var atlases = {}
 
 var project_name			= ""
 var project_folder			= ""
@@ -24,7 +26,6 @@ signal persons_updated
 signal dialogs_updated
 signal varibles_updated
 signal langs_updated
-signal lang_renamed
 
 signal clear_project
 	
@@ -36,7 +37,7 @@ func clear_project():
 	persons_atlas 	= {}
 	dialog_atlas 	= {}
 	varibles_atlas 	= {}
-	font_lang_atlas	= {"English" : "", "Russian" : ""}
+	font_lang_atlas	= {"English" : ["", Translation.new()]}
 	
 	emit_signal("clear_project")
 	
@@ -64,6 +65,15 @@ func collect_project_info():
 	person_collector_func.call_func()
 	dialogs_collector_func.call_func()
 
+func set_atlas_key(key : String, data : Dictionary):
+	atlases[key] = data
+
+func has_key_in_atlas(key : String) -> bool:
+	return key in atlases.keys()
+
+func get_atlas_key(key : String) -> Dictionary:
+	return atlases[key]
+
 func update_fonts_atlas(new_fonts_atlas : Dictionary):
 	project_unsaved = !data_is_same(fonts_atlas, new_fonts_atlas)
 	fonts_atlas = new_fonts_atlas
@@ -90,11 +100,6 @@ func update_varibles_atlas(new_varibles : Dictionary):
 	project_unsaved = !data_is_same(varibles_atlas, new_varibles)
 	varibles_atlas = new_varibles
 	emit_signal("varibles_updated")
-	
-func update_langs(new_langs : Dictionary):
-	project_unsaved = !data_is_same(font_lang_atlas, new_langs)
-	font_lang_atlas = new_langs
-	emit_signal("langs_updated")
 
 func data_is_same(old_data, new_data) -> bool:
 	if typeof(old_data) != typeof(new_data): return false
@@ -102,12 +107,6 @@ func data_is_same(old_data, new_data) -> bool:
 	elif old_data != new_data: return false
 	
 	return true
-
-func rename_lang(old_name : String, new_name : String):
-	if old_name in font_lang_atlas.keys():
-		font_lang_atlas[new_name] = font_lang_atlas[old_name]
-		font_lang_atlas.erase(old_name)
-		emit_signal("lang_renamed", old_name, new_name)
 
 func is_font_in_atlas(font_name : String):
 	return font_name in fonts_atlas.keys()
@@ -126,6 +125,9 @@ func is_varible_in_atlas(varible_name : String):
 
 func is_lang_in_atlas(lang_name : String):
 	return lang_name in font_lang_atlas.keys()
+	
+func is_lang_has_key(lang_name : String, key : String):
+	return lang_name in font_lang_atlas.keys() && key in font_lang_atlas[lang_name][0].get_message_list()
 
 func get_font_by_name(font_name : String) -> DynamicFont:
 	return fonts_atlas[font_name][0]
@@ -138,6 +140,13 @@ func get_mood_by_name(person_name : String, mood_name : String):
 	
 func get_dialog_by_name(dialog_name : String) -> Dictionary:
 	return dialog_atlas[dialog_name]
+
+func get_lang_font_by_name(lang_name : String) -> String:
+	return font_lang_atlas[lang_name][1]
+
+func get_lang_translation(lang_name : String, key : String) -> String:
+	var translation : Translation = font_lang_atlas[lang_name][0]
+	return translation.get_message(key)
 
 func export_data(args = ["user://TestExport", false]):
 	var path_to_save = args[0]
@@ -302,7 +311,7 @@ func export_data(args = ["user://TestExport", false]):
 			if file_handler.open(main_path + "/DialogDispetcher.gd", File.WRITE_READ) == OK:
 				file_handler.store_string(dd_code)
 			else:
-				print("ERROR! Can't open DialogDispetcher. Enums and signals not writed.")
+				Global.popup_error("Can't open DialogDispetcher. Enums and signals not writed.")
 			
 		file_handler.close()
 		

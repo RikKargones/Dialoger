@@ -7,7 +7,10 @@ func _ready():
 	dialog_text = \"\"
 
 func set_text_centred(text):
-	$Text.text = text
+	$Text.text = str(Time.get_time_dict_from_system()) + text
+
+func _on_ErrorDialog_popup_hide():
+	queue_free()
 "
 
 [node name="ErrorDialog" type="AcceptDialog"]
@@ -27,3 +30,5 @@ margin_right = -8.0
 margin_bottom = -42.0
 align = 1
 valign = 1
+
+[connection signal="popup_hide" from="." to="." method="_on_ErrorDialog_popup_hide"]

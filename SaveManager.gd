@@ -10,8 +10,8 @@ signal save_load_finished
 signal update_save_list
 
 var var_update_funcref 	: FuncRef
-var font_update_funcref : FuncRef
-var lang_update_funcref : FuncRef
+var font_update_funcref	: FuncRef
+var lang_update_funcref	: FuncRef
 var pers_update_funcref	: FuncRef
 var dial_update_funcref	: FuncRef
 
@@ -23,6 +23,7 @@ func _ready():
 		if file_manager.open(project_list_file_path, File.READ) == OK:
 			project_paths = file_manager.get_var()
 			if project_paths == null: project_paths = []
+			else: emit_signal("update_save_list")
 		else:
 			Global.popup_error("Someting wrong with project list file!\nFile exist, but can't be opend!")
 		
@@ -35,7 +36,8 @@ func save_project_list(add_path = ""):
 	
 	if add_path != "":
 		project_paths.append(add_path)
-		emit_signal("update_save_list", project_paths.duplicate())
+	
+	emit_signal("update_save_list", project_paths.duplicate())
 	
 	if file_manager.open(project_list_file_path, File.WRITE) == OK:
 		file_manager.store_var(project_paths)
@@ -75,6 +77,7 @@ func save_project():
 			var paths = FileManger.export_temp_files(ProjectManager.project_folder, false)
 			var fonts_saved = ProjectManager.fonts_atlas.duplicate(true)
 			var persons_saved = ProjectManager.persons_atlas.duplicate(true)
+			var lang_fonts_saved = ProjectManager.font_lang_atlas.duplicate(true)
 			var save_date = Time.get_date_dict_from_system()
 			var save_time = Time.get_time_string_from_system()
 			
@@ -85,6 +88,15 @@ func save_project():
 				for mood in persons_saved[person]["Moods"].keys():
 					var mood_file = persons_saved[person]["Moods"][mood][1]
 					persons_saved[person]["Moods"][mood] = paths[mood_file] + "/" + mood_file
+					
+			for lang in lang_fonts_saved.keys():
+				var transl : Translation = lang_fonts_saved[lang][1]
+				var messeges = {}
+				
+				for msg in transl.get_message_list():
+					messeges[msg] = transl[transl.get_message(msg)]
+				
+				lang_fonts_saved[lang][1] = [transl.locale, messeges]
 			
 			file_manager.store_var({
 				"CreateDate" 	: ProjectManager.project_create_date,
@@ -95,8 +107,17 @@ func save_project():
 				"SaveVersion"	: Defaluts.version
 				})
 			
+			file_manager.store_var([
+				Defaluts.max_lines,
+				Defaluts.max_symbols_per_line,
+				Defaluts.main_lang,
+				Defaluts.preview_miror_left,
+				Defaluts.preview_miror_center,
+				Defaluts.preview_miror_right
+				])
+			
 			file_manager.store_var(fonts_saved)
-			file_manager.store_var(ProjectManager.font_lang_atlas)
+			file_manager.store_var(lang_fonts_saved)
 			file_manager.store_var(persons_saved)
 			file_manager.store_var(ProjectManager.varibles_atlas)
 			file_manager.store_var(ProjectManager.dialog_atlas)
@@ -127,6 +148,7 @@ func load_project(path : String):
 		yield(get_tree(), "idle_frame")
 		
 		var save_info 					= file_manager.get_var()
+		var def_info					= file_manager.get_var()
 		ProjectManager.fonts_atlas 		= file_manager.get_var()
 		ProjectManager.font_lang_atlas 	= file_manager.get_var()
 		ProjectManager.persons_atlas	= file_manager.get_var()
@@ -141,6 +163,13 @@ func load_project(path : String):
 					ProjectManager.project_create_time = save_info[key]
 				"CreateVersion"	:
 					ProjectManager.project_create_version = save_info[key]
+		
+		Defaluts.max_lines 				= def_info[0]
+		Defaluts.max_symbols_per_line 	= def_info[1]
+		Defaluts.main_lang 				= def_info[2]
+		Defaluts.preview_miror_left 	= def_info[3]
+		Defaluts.preview_miror_center 	= def_info[4]
+		Defaluts.preview_miror_right 	= def_info[5]
 		
 		ProjectManager.project_name = path.get_file().rsplit(".", true, 1)[0]
 		ProjectManager.project_folder = path.get_basename().rsplit("/",true,1)[0]
@@ -159,7 +188,7 @@ func update_persons():
 
 func delete_path(path : String):
 	project_paths.erase(path)
-	emit_signal("update_save_list", project_paths.duplicate())
+	save_project_list()
 
 func show_load_popup():
 	pass

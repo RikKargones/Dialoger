@@ -414,6 +414,7 @@ func _on_LangChangeBt_item_selected(index):
 	current_langlage = lang_changer.get_item_text(index)
 	
 	var langs = []
+	
 	for lang in lang_changer.get_item_count():
 		if lang_changer.get_item_text(lang) != current_langlage:
 			langs.append(lang_changer.get_item_text(lang))

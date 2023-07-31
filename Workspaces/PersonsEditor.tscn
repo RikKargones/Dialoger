@@ -30,5 +30,4 @@ margin_bottom = 590.0
 size_flags_vertical = 3
 tab_align = 0
 
-[connection signal="visibility_changed" from="." to="." method="_on_PersonsProfiles_visibility_changed"]
 [connection signal="pressed" from="Full/AddBt" to="." method="_on_AddBt_pressed"]

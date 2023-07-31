@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "BaseData",
+"language": "GDScript",
+"path": "res://BaseData.gd"
+}, {
 "base": "GraphNode",
 "class": "DialogBase",
 "language": "GDScript",
@@ -44,10 +49,30 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://DragDropGraph.gd"
 }, {
+"base": "Container",
+"class": "ElementList",
+"language": "GDScript",
+"path": "res://GUI/ElementList.gd"
+}, {
+"base": "MarginContainer",
+"class": "FontElement",
+"language": "GDScript",
+"path": "res://Elements/FontSettings.gd"
+}, {
 "base": "Node",
 "class": "LangManager",
 "language": "GDScript",
 "path": "res://LanglugeManager.gd"
+}, {
+"base": "PanelContainer",
+"class": "LocaleElement",
+"language": "GDScript",
+"path": "res://GUI/LangElement.gd"
+}, {
+"base": "MarginContainer",
+"class": "PersonProfile",
+"language": "GDScript",
+"path": "res://Elements/PersonProfile.gd"
 }, {
 "base": "DialogBase",
 "class": "Replick",
@@ -58,8 +83,14 @@ _global_script_classes=[ {
 "class": "StatementLine",
 "language": "GDScript",
 "path": "res://Elements/IfStatement.gd"
+}, {
+"base": "MarginContainer",
+"class": "VaribleElement",
+"language": "GDScript",
+"path": "res://Elements/VaribleElement.gd"
 } ]
 _global_script_class_icons={
+"BaseData": "",
 "DialogBase": "",
 "DialogEditor": "",
 "DialogOption": "",
@@ -67,9 +98,14 @@ _global_script_class_icons={
 "DialogVarible": "",
 "DragDropLogic": "",
 "DrogDropGraph": "",
+"ElementList": "",
+"FontElement": "",
 "LangManager": "",
+"LocaleElement": "",
+"PersonProfile": "",
 "Replick": "",
-"StatementLine": ""
+"StatementLine": "",
+"VaribleElement": ""
 }
 
 [application]
@@ -85,6 +121,10 @@ Defaluts="*res://Defaluts.gd"
 FileManger="*res://FileManger.gd"
 SaveManager="*res://SaveManager.gd"
 ProjectManager="*res://ProjectManager.gd"
+FontsData="*res://FontsData.gd"
+VariblesData="*res://VariblesData.gd"
+LangluageData="*res://LangluageData.gd"
+PersonsData="*res://PersonsData.gd"
 
 [gui]
 

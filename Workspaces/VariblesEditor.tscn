@@ -43,5 +43,4 @@ size_flags_vertical = 3
 margin_right = 1014.0
 size_flags_horizontal = 3
 
-[connection signal="visibility_changed" from="." to="." method="_on_VariblesEditor_visibility_changed"]
 [connection signal="pressed" from="Editor/Settings/Add_Bt" to="." method="_on_Add_Bt_pressed"]

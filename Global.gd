@@ -3,17 +3,20 @@ extends Node
 enum DialogePictureAligment		 	{Left, Center, Right}
 enum DialogType						{Replic, Options, Varible, Branch}
 
-onready var error_popup 			= preload("res://Popups/ErrorDialog.tscn").instance()
-onready var file_open_popup			= preload("res://Popups/FileDialog.tscn").instance()
-onready var confurm_dialog_popup	= preload("res://Popups/ConfirmationDialog.tscn").instance()
-onready var confirm_name_popup		= preload("res://Popups/FiledWithConformation.tscn").instance()
+onready var error_popup 			= preload("res://Popups/ErrorDialog.tscn")
+onready var confurm_dialog_popup	= preload("res://Popups/ConfirmationDialog.tscn")
+onready var confurm_name_popup		= preload("res://Popups/FiledWithConformation.tscn")
+
 onready var export_status			= preload("res://Popups/ExportStatus.tscn").instance()
+onready var file_open_popup			= preload("res://Popups/FileDialog.tscn").instance()
+
+var active_popups = []
 
 var file_catcher 	: FuncRef
 var confurm_catcher : FuncRef
 var name_catcher	: FuncRef
 
-var current_thread : Thread
+var export_thread 	: Thread
 
 signal block_screen
 signal unblock_screen
@@ -26,40 +29,26 @@ func _ready():
 	
 	export_status.visible = false
 	
-	root.add_child(error_popup)
 	root.add_child(file_open_popup)
-	root.add_child(confurm_dialog_popup)
-	root.add_child(confirm_name_popup)
 	root.add_child(export_status)
 	
-	error_popup.owner 			= root
 	file_open_popup.owner 		= root
-	confurm_dialog_popup.owner	= root
-	confirm_name_popup.owner	= root
 	
 	file_open_popup.connect("file_selected", 	self, "return_path_to_file")
 	file_open_popup.connect("files_selected", 	self, "return_path_to_file")
 	file_open_popup.connect("dir_selected", 	self, "return_path_to_file")
-	
-	confurm_dialog_popup.connect("confirmed", 	self, "return_confurmation")
-	confirm_name_popup.connect("confirmed", 	self, "return_new_name")
 
 func _physics_process(delta):
 	if Input.is_action_just_released("ui_cancel"):
 		start_export("user://TestExport")
 	
 func start_export(path_to_save : String, for_preview = false):
-	if is_instance_valid(current_thread) && current_thread.is_active():
+	if is_instance_valid(export_thread) && export_thread.is_active():
 		return ERR_BUSY
 	
-	current_thread = Thread.new()
-	current_thread.start(ProjectManager, "export_data", [path_to_save, for_preview])
+	export_thread = Thread.new()
+	export_thread.start(ProjectManager, "export_data", [path_to_save, for_preview])
 	return OK
-
-func popup_error(text : String):
-	error_popup.set_text_centred(text)
-	error_popup.set_as_minsize()
-	error_popup.popup_centered()
 
 func open_file(function_catcher : FuncRef, filters : PoolStringArray, dialog_title : String, mode = FileDialog.MODE_OPEN_FILE):
 	file_catcher = function_catcher
@@ -73,27 +62,44 @@ func open_file(function_catcher : FuncRef, filters : PoolStringArray, dialog_tit
 		
 	file_open_popup.popup_centered()
 
+func add_active_popup(popup : WindowDialog):
+	active_popups.append(popup)
+	popup.connect("popup_hide", self, "update_active_popups")
+	
+func update_active_popups():
+	for popup in active_popups:
+		if !is_instance_valid(popup):
+			active_popups.erase(popup)
+
+func popup_error(text : String):
+	var popup = error_popup.instance()
+	get_tree().current_scene.add_child(popup)
+	popup.set_text_centred(text)
+	popup.set_as_minsize()
+	popup.popup_centered()
+	add_active_popup(popup)
+
 func confurm_something(func_catcher : FuncRef, text : String):
-	confurm_catcher = func_catcher
-	confurm_dialog_popup.set_text_centred(text)
-	confurm_dialog_popup.set_as_minsize()
-	confurm_dialog_popup.popup_centered()
+	var popup = confurm_dialog_popup.instance()
+	get_tree().current_scene.add_child(popup)
+	popup.set_information(func_catcher, text)
+	add_active_popup(popup)
 	
 func name_something(func_catcher : FuncRef, message_text : String, unacessable_names : Array = [], no_spaces = false):
-	name_catcher = func_catcher
-	confirm_name_popup.window_title = message_text
-	confirm_name_popup.no_spaces = no_spaces
-	confirm_name_popup.set_unacessable_names(unacessable_names)
-	confirm_name_popup.set_as_minsize()
-	confirm_name_popup.popup_centered()
+	var popup = confurm_name_popup.instance()
+	get_tree().current_scene.add_child(popup)
+	popup.set_information(func_catcher, message_text, unacessable_names, no_spaces)
+	popup.set_as_minsize()
+	popup.popup_centered()
+	add_active_popup(popup)
 
 func show_export_status():
 	emit_signal("block_screen")
 	export_status.visible = true
 
 func end_export_status():
-	if is_instance_valid(current_thread):
-		current_thread.wait_to_finish()
+	if is_instance_valid(export_thread):
+		export_thread.wait_to_finish()
 	export_status.visible = false
 	emit_signal("unblock_screen")
 	
@@ -104,15 +110,6 @@ func start_export_status(status : String):
 func update_export_status(step_percent : float, status : String):
 	export_status.progress_percent(step_percent)
 	export_status.set_status(status)
-
-func return_confurmation():
-	if is_instance_valid(confurm_catcher) && confurm_catcher.is_valid():
-		confurm_catcher.call_func()
-
-func return_new_name():
-	if is_instance_valid(name_catcher) && name_catcher.is_valid():
-		name_catcher.call_func(confirm_name_popup.get_filed_content())
-		confirm_name_popup.clear_filed_content()
 
 func return_path_to_file(path):
 	if is_instance_valid(file_catcher) && file_catcher.is_valid():
