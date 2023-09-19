@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://DialogEditorElements/Other/TranslationElement.gd" type="Script" id=1]
+[ext_resource path="res://DialogEditorElements/Blocks/Words.gd" type="Script" id=2]
+[ext_resource path="res://DialogEditorElements/Other/TranslatePopup.tscn" type="PackedScene" id=3]
+
+[node name="Words" type="MarginContainer"]
+margin_right = 216.0
+margin_bottom = 212.0
+script = ExtResource( 2 )
+
+[node name="Popup" parent="." instance=ExtResource( 3 )]
+margin_top = 0.0
+margin_right = 216.0
+margin_bottom = 212.0
+
+[node name="TranslationController" type="Node" parent="."]
+script = ExtResource( 1 )
+path_to_node = NodePath("../UI/TextEdit")
+path_to_translator = NodePath("../Popup")
+msg_holder = NodePath("..")
+
+[node name="UI" type="VBoxContainer" parent="."]
+margin_right = 216.0
+margin_bottom = 212.0
+
+[node name="Label" type="Label" parent="UI"]
+margin_right = 216.0
+margin_bottom = 20.0
+text = "kjdklddfjdj:"
+
+[node name="TextEdit" type="TextEdit" parent="UI"]
+margin_top = 24.0
+margin_right = 216.0
+margin_bottom = 212.0
+size_flags_horizontal = 3
+size_flags_vertical = 3

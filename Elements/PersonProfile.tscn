@@ -2,9 +2,9 @@
 
 [ext_resource path="res://Other/PanelWithCorners.tres" type="StyleBox" id=1]
 [ext_resource path="res://Elements/PersonProfile.gd" type="Script" id=2]
-[ext_resource path="res://GUI/FontChoose.tscn" type="PackedScene" id=3]
-[ext_resource path="res://GUI/Align.tscn" type="PackedScene" id=4]
-[ext_resource path="res://GUI/LangChooseBt.tscn" type="PackedScene" id=5]
+[ext_resource path="res://DialogEditorElements/Pickers/FontChoose.gd" type="Script" id=3]
+[ext_resource path="res://DialogEditorElements/Pickers/LocalePicker.gd" type="Script" id=4]
+[ext_resource path="res://DialogEditorElements/Pickers/AlignChoose.gd" type="Script" id=5]
 
 [node name="PersonProfile" type="MarginContainer"]
 anchor_right = 1.0
@@ -36,13 +36,11 @@ margin_bottom = 20.0
 text = "For langauge:"
 align = 1
 
-[node name="LangChangeBt" parent="Moods/Settings" instance=ExtResource( 5 )]
+[node name="LocalePicker" type="OptionButton" parent="Moods/Settings"]
 margin_top = 30.0
 margin_right = 150.0
 margin_bottom = 56.0
-text = "English"
-items = [ "English", null, false, 0, null ]
-selected = 0
+script = ExtResource( 4 )
 
 [node name="Label" type="Label" parent="Moods/Settings"]
 margin_top = 66.0
@@ -65,10 +63,11 @@ margin_bottom = 156.0
 text = "Defalut font:"
 align = 1
 
-[node name="FontChoose" parent="Moods/Settings" instance=ExtResource( 3 )]
+[node name="FontPicker" type="OptionButton" parent="Moods/Settings"]
 margin_top = 166.0
 margin_right = 150.0
 margin_bottom = 192.0
+script = ExtResource( 3 )
 
 [node name="VSeparator6" type="HSeparator" parent="Moods/Settings"]
 margin_top = 202.0
@@ -83,12 +82,11 @@ text = "Position in dialog:"
 align = 1
 autowrap = true
 
-[node name="Align" parent="Moods/Settings" instance=ExtResource( 4 )]
+[node name="AlignPicker" type="OptionButton" parent="Moods/Settings"]
 margin_top = 246.0
 margin_right = 150.0
 margin_bottom = 272.0
-align = 1
-items = [ "Left", null, false, 0, null, "Center", null, false, 1, null, "Right", null, false, 2, null ]
+script = ExtResource( 5 )
 
 [node name="VSeparator8" type="HSeparator" parent="Moods/Settings"]
 margin_top = 282.0
@@ -134,10 +132,9 @@ scroll_horizontal_enabled = false
 [node name="Grid" type="GridContainer" parent="Moods/Moods/Scroll"]
 columns = 4
 
-[connection signal="item_selected" from="Moods/Settings/LangChangeBt" to="." method="_on_LangChangeBt_item_selected"]
+[connection signal="item_selected" from="Moods/Settings/LocalePicker" to="." method="_on_LocalePicker_item_selected"]
 [connection signal="text_changed" from="Moods/Settings/DialogName" to="." method="_on_DialogName_text_changed"]
-[connection signal="item_selected" from="Moods/Settings/FontChoose" to="." method="_on_FontChoose_item_selected"]
-[connection signal="item_selected" from="Moods/Settings/Align" to="." method="_on_Align_item_selected"]
+[connection signal="item_selected" from="Moods/Settings/FontPicker" to="." method="_on_FontPicker_item_selected"]
+[connection signal="item_selected" from="Moods/Settings/AlignPicker" to="." method="_on_AlignPicker_item_selected"]
 [connection signal="pressed" from="Moods/Settings/AddBt" to="." method="_on_AddBt_pressed"]
 [connection signal="pressed" from="Moods/Settings/Delete" to="." method="_on_Delete_pressed"]
-[connection signal="child_exiting_tree" from="Moods/Moods/Scroll/Grid" to="." method="_on_Grid_child_exiting_tree"]

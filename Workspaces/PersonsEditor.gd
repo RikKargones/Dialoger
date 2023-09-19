@@ -8,7 +8,7 @@ func _ready():
 	PersonsData.connect("refresh_data", self, "set_from_data")
 	
 func set_from_data():
-	var persons_list = PersonsData.get_person_list()
+	var persons_list = PersonsData.get_persons_list()
 	
 	for child in list.get_children():
 		if child is PersonProfile:
@@ -19,17 +19,22 @@ func set_from_data():
 				child.queue_free()
 	
 	for person in persons_list:
-		make_new(person)
+		make_new(person, false)
 
-func make_new(new_name : String):
+func make_new(new_name : String, add = true):
 	var person_inst 	= pck_profile.instance()
+	
 	person_inst.name 	= new_name
+	
+	if add:
+		PersonsData.add_person(new_name)
+		person_inst.update_from_global()
+	else:
+		person_inst.update_from_global()
+	
 	list.add_child(person_inst)
+	
+	return person_inst
 
 func _on_AddBt_pressed():
-	var names = []
-	
-	for node in list.get_children():
-		names.append(node.name)
-	
-	Global.name_something(funcref(self, "make_new"), "Укажите внутреннее имя.", names, true)
+	Global.name_something(funcref(self, "make_new"), "Укажите внутреннее имя.", PersonsData.get_persons_list(), true)

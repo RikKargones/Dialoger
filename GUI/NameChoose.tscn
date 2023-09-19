@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://GUI/NameChoose.gd" type="Script" id=1]
+[ext_resource path="res://DialogEditorElements/Pickers/NameChoose.gd" type="Script" id=1]
 
 [node name="NameChoose" type="OptionButton"]
 margin_right = 78.0

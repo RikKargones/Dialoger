@@ -9,35 +9,35 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "OptionButton",
+"class": "AlignPicker",
+"language": "GDScript",
+"path": "res://DialogEditorElements/Pickers/AlignChoose.gd"
+}, {
 "base": "Node",
 "class": "BaseData",
 "language": "GDScript",
-"path": "res://BaseData.gd"
+"path": "res://Datas/BaseData.gd"
+}, {
+"base": "MarginContainer",
+"class": "BasicGraphBlock",
+"language": "GDScript",
+"path": "res://DialogEditorElements/Blocks/BasicGraphBlock.gd"
 }, {
 "base": "GraphNode",
-"class": "DialogBase",
+"class": "BasicGraphNode",
 "language": "GDScript",
-"path": "res://DialogEditorElements/GraphElements/DialogBase.gd"
+"path": "res://DialogEditorElements/GraphElements/BasicGraphNode.gd"
 }, {
 "base": "MarginContainer",
 "class": "DialogEditor",
 "language": "GDScript",
 "path": "res://Workspaces/GraphDialogEditor.gd"
 }, {
-"base": "HBoxContainer",
-"class": "DialogOption",
-"language": "GDScript",
-"path": "res://DialogEditorElements/DialogOption.gd"
-}, {
 "base": "Node",
 "class": "DialogProcessor",
 "language": "GDScript",
 "path": "res://DialogDispetcher/DialogProcessor.gd"
-}, {
-"base": "DialogBase",
-"class": "DialogVarible",
-"language": "GDScript",
-"path": "res://DialogEditorElements/GraphElements/Varible.gd"
 }, {
 "base": "Button",
 "class": "DragDropLogic",
@@ -59,6 +59,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Elements/FontSettings.gd"
 }, {
+"base": "OptionButton",
+"class": "FontPicker",
+"language": "GDScript",
+"path": "res://DialogEditorElements/Pickers/FontChoose.gd"
+}, {
 "base": "Node",
 "class": "LangManager",
 "language": "GDScript",
@@ -69,20 +74,45 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://GUI/LangElement.gd"
 }, {
+"base": "OptionButton",
+"class": "LocalePicker",
+"language": "GDScript",
+"path": "res://DialogEditorElements/Pickers/LocalePicker.gd"
+}, {
+"base": "MarginContainer",
+"class": "Mood",
+"language": "GDScript",
+"path": "res://Elements/Mood.gd"
+}, {
+"base": "OptionButton",
+"class": "MoodPicker",
+"language": "GDScript",
+"path": "res://DialogEditorElements/Pickers/MoodChoose.gd"
+}, {
+"base": "OptionButton",
+"class": "PersonPicker",
+"language": "GDScript",
+"path": "res://DialogEditorElements/Pickers/NameChoose.gd"
+}, {
 "base": "MarginContainer",
 "class": "PersonProfile",
 "language": "GDScript",
 "path": "res://Elements/PersonProfile.gd"
 }, {
-"base": "DialogBase",
-"class": "Replick",
-"language": "GDScript",
-"path": "res://DialogEditorElements/GraphElements/Replick.gd"
-}, {
 "base": "MarginContainer",
 "class": "StatementLine",
 "language": "GDScript",
 "path": "res://Elements/IfStatement.gd"
+}, {
+"base": "Control",
+"class": "TranslateShower",
+"language": "GDScript",
+"path": "res://DialogEditorElements/Other/TranslatePopup.gd"
+}, {
+"base": "Node",
+"class": "TranslationController",
+"language": "GDScript",
+"path": "res://DialogEditorElements/Other/TranslationElement.gd"
 }, {
 "base": "MarginContainer",
 "class": "VaribleElement",
@@ -90,21 +120,27 @@ _global_script_classes=[ {
 "path": "res://Elements/VaribleElement.gd"
 } ]
 _global_script_class_icons={
+"AlignPicker": "",
 "BaseData": "",
-"DialogBase": "",
+"BasicGraphBlock": "",
+"BasicGraphNode": "",
 "DialogEditor": "",
-"DialogOption": "",
 "DialogProcessor": "",
-"DialogVarible": "",
 "DragDropLogic": "",
 "DrogDropGraph": "",
 "ElementList": "",
 "FontElement": "",
+"FontPicker": "",
 "LangManager": "",
 "LocaleElement": "",
+"LocalePicker": "",
+"Mood": "",
+"MoodPicker": "",
+"PersonPicker": "",
 "PersonProfile": "",
-"Replick": "",
 "StatementLine": "",
+"TranslateShower": "",
+"TranslationController": "",
 "VaribleElement": ""
 }
 
@@ -121,10 +157,11 @@ Defaluts="*res://Defaluts.gd"
 FileManger="*res://FileManger.gd"
 SaveManager="*res://SaveManager.gd"
 ProjectManager="*res://ProjectManager.gd"
-FontsData="*res://FontsData.gd"
-VariblesData="*res://VariblesData.gd"
-LangluageData="*res://LangluageData.gd"
-PersonsData="*res://PersonsData.gd"
+FontsData="*res://Datas/FontsData.gd"
+VariblesData="*res://Datas/VariblesData.gd"
+LangluageData="*res://Datas/LangluageData.gd"
+PersonsData="*res://Datas/PersonsData.gd"
+DialogData="*res://Datas/DialogData.gd"
 
 [gui]
 

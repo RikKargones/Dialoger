@@ -1,0 +1,87 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://DialogEditorElements/GraphElements/TextNode.gd" type="Script" id=1]
+[ext_resource path="res://DialogEditorElements/Pickers/FontChoose.gd" type="Script" id=2]
+[ext_resource path="res://DialogEditorElements/Blocks/Words.tscn" type="PackedScene" id=3]
+[ext_resource path="res://DialogEditorElements/Pickers/NameChoose.gd" type="Script" id=4]
+
+[node name="TextNode" type="GraphNode"]
+margin_right = 453.0
+margin_bottom = 311.0
+show_close = true
+resizable = true
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color( 1, 1, 1, 1 )
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color( 1, 1, 1, 1 )
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color( 1, 1, 1, 1 )
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 1 )
+type_id = 1
+
+[node name="Settings" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 437.0
+margin_bottom = 50.0
+alignment = 1
+
+[node name="PersonLabel" type="Label" parent="Settings"]
+margin_top = 3.0
+margin_right = 46.0
+margin_bottom = 23.0
+text = "Person:"
+
+[node name="PersonPicker" type="OptionButton" parent="Settings"]
+margin_left = 50.0
+margin_right = 212.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+script = ExtResource( 4 )
+
+[node name="VSeparator" type="VSeparator" parent="Settings"]
+margin_left = 216.0
+margin_right = 220.0
+margin_bottom = 26.0
+
+[node name="FontLabel" type="Label" parent="Settings"]
+margin_left = 224.0
+margin_top = 3.0
+margin_right = 254.0
+margin_bottom = 23.0
+text = "Font:"
+
+[node name="FontPicker" type="OptionButton" parent="Settings"]
+margin_left = 258.0
+margin_right = 421.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+script = ExtResource( 2 )
+
+[node name="HSeparator" type="HSeparator" parent="."]
+margin_left = 16.0
+margin_top = 51.0
+margin_right = 437.0
+margin_bottom = 55.0
+
+[node name="Words" parent="." instance=ExtResource( 3 )]
+margin_left = 16.0
+margin_top = 56.0
+margin_right = 437.0
+margin_bottom = 305.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+person_picker = NodePath("../Settings/PersonPicker")
+font_picker = NodePath("../Settings/FontPicker")

@@ -31,8 +31,5 @@ func set_data(new_data : Dictionary):
 func set_data_from_save(save_data : Dictionary):
 	data = save_data
 
-func get_data_as_save() -> Dictionary:
-	return data
-	
-func get_export_data() -> Dictionary:
+func get_save_data() -> Dictionary:
 	return data

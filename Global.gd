@@ -140,7 +140,10 @@ func update_selector(selector : OptionButton, item_array : PoolStringArray, sele
 		for idx in selector.get_item_count():
 			if selector.get_item_text(idx) == old_name:
 				selector.select(idx)
-				break
+				return
+	
+	if selector.get_item_count() > 0:
+		selector.select(0)
 
 func add_name_meta(nodes : Array, custom_name_get : String = "", backwards_check = false):
 	var name_array = {}

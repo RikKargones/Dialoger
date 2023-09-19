@@ -36,15 +36,13 @@ func set_user_defalut_font(font_name : String):
 
 func add_font(path : String, custom_name = ""):
 	var file_name : String = path.rsplit("/", true, 1)[1]
-	var font_info = FileManger.register_temp_file(path, "Res/Fonts")
+	var font_info = FileManger.register_external_file(path, "Res/Fonts")
 	
 	print(file_name)
 	
 	if font_info.size() > 0:
 		var font_name_w_ex = font_info[0]
 		var font_data = load(font_info[1] + "/" + font_name_w_ex)
-		
-		print(font_name_w_ex)
 		
 		if font_data is DynamicFontData:
 			var font 		= DynamicFont.new()
@@ -68,6 +66,7 @@ func add_font(path : String, custom_name = ""):
 			if data.keys().size() == 0: system_defalut_font = full_name
 			
 			data[full_name] = [font_name_w_ex, font]
+			FileManger.register_inside_resource(font, "DynamicFont")
 			emit_signal("refresh_data")
 		else:
 			Global.popup_error("File doesn't have dynamic font data.\nPlease, choose ONLY dynamic fonts (.otf, .ttf).")
@@ -77,25 +76,23 @@ func add_font(path : String, custom_name = ""):
 func change_font_data(font_name : String, path : String):
 	if !is_font_in_list(font_name): return
 	
-	var new_font_info = FileManger.register_temp_file(path, "Res/Fonts")
+	var new_font_info = FileManger.register_external_file(path, "Res/Fonts")
 	
 	if new_font_info.size() > 0:
 		var font_name_w_ex = new_font_info[0]
 		var font_data = load(new_font_info[1] + "/" + font_name_w_ex)
 		
 		if font_data is DynamicFontData:
-			var font : DynamicFont = data[font_name][1]
+			data[font_name][1].font_data = font_data
 			
-			font.font_data = font_data
+			FileManger.unregister_external_file(data[font_name][0])
 			
-			FileManger.unregister_temp_file(data[font_name][0])
-			
-			data[font_name] = [font_name_w_ex, font]
+			data[font_name][0] = font_name_w_ex
 			emit_signal("refresh_data")
 		else:
-			Global.popup_error("File doesn't have dynamic font data.\nPlease, choose ONLY dynamic fonts (.otf, .ttf).")
+			Global.popup_error("FONT: File doesn't have dynamic font data.\nPlease, choose ONLY dynamic fonts (.otf, .ttf).")
 	else:
-		Global.popup_error("Something wrong with font file path. File can't be registred as external resurce.")
+		Global.popup_error("FONT: Something wrong with font file path. File can't be registred as external resurce.")
 
 func change_font_name(old_font_name : String, new_font_name : String):
 	if !is_font_in_list(old_font_name) || is_font_in_list(new_font_name): return
@@ -108,7 +105,9 @@ func change_font_name(old_font_name : String, new_font_name : String):
 func delete_font(font_name : String):
 	if !is_font_in_list(font_name): return
 	
-	FileManger.unregister_temp_file(data[font_name][0])
+	FileManger.unregister_external_file(data[font_name][0])
+	FileManger.unregister_inside_resource(data[font_name][1].resource_name)
+	
 	data.erase(font_name)
 	
 	emit_signal("refresh_data")

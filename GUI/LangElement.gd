@@ -6,22 +6,22 @@ onready var locale_full				= $Element/LangName
 onready var locale_font_chooser 	= $Element/FontChoose
 onready var locale_short			= $Element/LocaleShort
 
-signal local_toggled(me, to)
-signal font_changed(me, new_font)
+signal local_toggled(to)
+signal font_changed(new_font)
 
 func set_selection(on : bool):
 	locale_full.pressed = on
 
-func is_selected():
+func is_selected() -> bool:
 	return locale_full.pressed
 
-func get_locale_full():
+func get_locale_full() -> String:
 	return locale_full.text
 	
-func get_locale_short():
+func get_locale_short() -> String:
 	return locale_short.text
 	
-func get_locale_font():
+func get_locale_font() -> String:
 	return locale_font_chooser.text
 	
 func set_locale_name(new_name : String):
@@ -37,7 +37,7 @@ func set_locale_font(font_name : String):
 				locale_font_chooser.select(item)
 
 func _on_LangName_toggled(button_pressed):
-	emit_signal("local_toggled", self, button_pressed)
+	emit_signal("local_toggled", button_pressed)
 
 func _on_FontChoose_item_selected(index):
-	emit_signal("font_changed", self, locale_font_chooser.get_item_text(index))
+	emit_signal("font_changed", locale_font_chooser.get_item_text(index))

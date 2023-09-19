@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Other/PanelWithCornersNormal.tres" type="StyleBox" id=1]
+[ext_resource path="res://Workspaces/NewProjectPopup.gd" type="Script" id=2]
 [ext_resource path="res://Workspaces/LoadScreen.gd" type="Script" id=3]
 
 [node name="LoadScreen" type="MarginContainer"]
@@ -122,6 +123,7 @@ margin_right = 250.0
 margin_bottom = 70.0
 rect_min_size = Vector2( 500, 52.5 )
 window_title = "New project"
+script = ExtResource( 2 )
 
 [node name="Margin" type="MarginContainer" parent="Control/NewProjectPopup"]
 anchor_right = 1.0

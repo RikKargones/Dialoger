@@ -339,4 +339,3 @@ custom_styles/panel = SubResource( 2 )
 [connection signal="pressed" from="All/SelectBts/DiaEditBt" to="." method="_on_DiaEditBt_pressed"]
 [connection signal="pressed" from="All/SelectBts/PreviewBt" to="." method="_on_PreviewBt_pressed"]
 [connection signal="pressed" from="All/SelectBts/AboutBt" to="." method="_on_AboutBt_pressed"]
-[connection signal="hide_interface" from="All/Scroller/Workspace/DialogEditor" to="." method="_on_DialogEditor_hide_interface"]

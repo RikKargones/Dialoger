@@ -20,7 +20,7 @@ func set_fonts():
 	var fonts 		= FontsData.get_fonts_list()
 	var font_def 	= FontsData.get_font_defalut()
 	
-	fonts.erase(FontsData.get_font_name_defalut())
+	fonts.erase(FontsData.get_font_defalut())
 	
 	for child in font_list.get_children():
 		if child is FontElement:

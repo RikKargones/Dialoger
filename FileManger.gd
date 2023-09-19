@@ -1,22 +1,27 @@
 extends Node
 
-var files_list		 = {}
-var project_folder	 = "user://CurProject/"
+var files_list		= {}
+var resources_list 	= {}
+var project_folder	= "user://CurProject/"
 
-func get_temp_file_path(file_name : String):
+func get_external_file_path(file_name : String) -> String:
 	if file_name in files_list.keys():
 		return files_list[file_name][0]
 	else:
 		return ""
 
+func get_inside_resource(res_name : String) -> Resource:
+	if res_name in resources_list.keys():
+		return resources_list[res_name][1]
+	return null
+
 #func checking is file are new (copy to specified folder in temp_folder if it is) and returns it's name in files_list
-func register_temp_file(path_to_file : String, path_to_dir : String) -> Array:
+func register_external_file(path_to_file : String, path_to_dir : String) -> Array:
 	var dir_manager 	= Directory.new()
 	var file_handler	= File.new()
 	var file : String	= path_to_file.rsplit("/", true, 1)[1]
 	
-	path_to_dir = path_to_dir.trim_prefix("/")
-	path_to_dir = path_to_dir.trim_suffix("/")
+	path_to_dir = path_to_dir.trim_prefix("/").trim_suffix("/")
 	path_to_dir = project_folder + path_to_dir
 	
 	if dir_manager.file_exists(path_to_file):
@@ -34,11 +39,11 @@ func register_temp_file(path_to_file : String, path_to_dir : String) -> Array:
 		#makes unic filename if file name exist
 		if file in files_list.keys():
 			var count = 1
-			var new_file = make_file_numbered(file, str(count))
+			var new_file = make_numbered_file(file, str(count))
 			
 			while new_file in files_list.keys():
 				count += 1
-				new_file = make_file_numbered(new_file, str(count))
+				new_file = make_numbered_file(new_file, str(count))
 				
 			file = new_file
 		
@@ -53,14 +58,8 @@ func register_temp_file(path_to_file : String, path_to_dir : String) -> Array:
 	else:
 		print("ERROR! File not found...")
 		return []
-
-func make_file_numbered(file_name : String, number : String):
-	if "." in file_name:
-		return file_name.rsplit(".", true, 1)[0] + " (" + number + ")." + file_name.rsplit(".", true, 1)[1]
-	else:
-		return file_name + " (" + number + ")"
-
-func unregister_temp_file(file_name : String):
+		
+func unregister_external_file(file_name : String):
 	if file_name in files_list.keys():
 		var dir_manager = Directory.new()
 		
@@ -73,30 +72,135 @@ func unregister_temp_file(file_name : String):
 		else:
 			print("ERROR! File not exist!")
 			files_list.erase(file_name)
-		
 	else:
 		print("ERROR! File not registred.")
 
-func export_temp_files(dest : String, is_res = true) -> Dictionary:
+func register_inside_resource(res : Resource, dir_path : String):
 	var dir_manager = Directory.new()
-	var export_list = {}
+	var res_name 	= get_class() + ".tres"
+	var number		= 1
+	var pr_path 	= project_folder + dir_path.trim_prefix("/")
 	
-	dest = dest.trim_suffix("/")
+	res.resource_name = res_name
 	
-	if dir_manager.dir_exists(dest):
-		for file in files_list.keys():
-			if dir_manager.file_exists(files_list[file][0] + "/" + file): 
-				var full_dest = dest + "/" + files_list[file][0].trim_prefix(project_folder)
-				
-				if !dir_manager.dir_exists(full_dest): dir_manager.make_dir_recursive(full_dest)
-				
-				dir_manager.copy(files_list[file][0] + "/" + file, full_dest + "/" + file)
-				if is_res: export_list[file] = files_list[file][0].replace(project_folder, "res://Dialogs/")
-				else: export_list[file] = files_list[file][0].replace(project_folder, dest + "/")
+	while res.resource_name in resources_list.keys():
+		res.resource_name = make_numbered_file(res_name, number)
+		number += 1
+	
+	if !dir_manager.dir_exists(pr_path): dir_manager.make_dir_recursive(pr_path)
+	
+	if ResourceSaver.save(pr_path.trim_suffix("/") + "/" + res.resource_name, res, ResourceSaver.FLAG_CHANGE_PATH) != OK:
+		res.resource_name = ""
 	else:
-		print("ERROR! Directory to save not found.")
+		resources_list[res.resource_name] = [pr_path, res]
+		res.connect("changed", self, "resave_inside_resource", [res.resource_name])
+	
+	return res.resource_name
+
+func resave_inside_resource(res_name : String):
+	if res_name in resources_list.keys():
+		var dir_manager = Directory.new()
+		var pr_path = resources_list[res_name][0].trim_suffix("/")
 		
-	return export_list
+		if !dir_manager.dir_exists(pr_path): dir_manager.make_dir_recursive(pr_path)
+		
+		if ResourceSaver.save(pr_path + "/" + res_name, resources_list[res_name][1]) != OK:
+			Global.popup_error("RESOURCES: Can't resave resource! (" + res_name + ")\nChanges not saved.")
+
+func unregister_inside_resource(res_name : String):
+	var dir_manager = Directory.new()
+	var file_path	= resources_list[res_name][0].trim_suffix("/") + "/" + res_name
+	
+	if res_name in resources_list.keys():
+		if dir_manager.file_exists(file_path):
+			dir_manager.remove(file_path)
+		resources_list.erase(res_name)
+
+func make_numbered_file(file_name : String, number : String):
+	if "." in file_name:
+		return file_name.rsplit(".", true, 1)[0] + " (" + number + ")." + file_name.rsplit(".", true, 1)[1]
+	else:
+		return file_name + " (" + number + ")"
+
+func export_resources(dest : String):
+	var dir_manager = Directory.new()
+	var lost_file 	= false
+	var cant_save 	= false
+	var paths 		= {}
+	
+	var f_list		= {}
+	var r_list		= {}
+	
+	var full_path 	= ""
+	var dir_path 	= ""
+	var dest_path 	= ""
+	
+	for file in files_list.keys():
+		full_path = project_folder.trim_suffix("/") + "/" + files_list[file][0].trim_suffix("/") +"/" + file
+		dir_path = dest.trim_suffix("/") + "/" + files_list[file][0]
+		dest_path = dir_path.trim_suffix("/") + "/" + file
+		
+		if !dir_manager.file_exists(full_path):
+			lost_file = true
+			continue
+		
+		f_list[file] = [files_list[file][0], dest_path, files_list[file][1]]
+		paths[full_path] = [dir_path, dest_path]
+		
+	for res in resources_list.keys():
+		full_path = project_folder.trim_suffix("/") + "/" + resources_list[res][0].trim_suffix("/") + "/" + res
+		dir_path = dest.trim_suffix("/") + "/" + resources_list[res][0]
+		dest_path = dir_path.trim_suffix("/") + "/" + res
+		
+		if !dir_manager.file_exists(full_path):
+			lost_file = true
+			continue
+		
+		r_list[res] = [resources_list[res][0], dest_path]
+		paths[full_path] = [dir_path, dest_path]
+	
+	for path in paths.keys():	
+		if !dir_manager.dir_exists(paths[path][0]): dir_manager.make_dir_recursive(paths[path][0])
+		if dir_manager.copy(path, paths[path][1]) != OK: cant_save = true
+		
+	if lost_file: Global.popup_error("EXPORT: Can't find part of saved resources. Not all project file's saved.")
+	if cant_save: Global.popup_error("EXPORT: Can't save part of project resources in desired destanation.")
+	
+	return [f_list, r_list]
+
+#f_list = {file_name : [path_to, absolute_path_to, ref_count]}
+#r_list = {res_name : [path_to, absolute_path_to]}
+func load_exported_resouces(f_list : Dictionary, r_list : Dictionary):
+	var dir_manager = Directory.new()
+	var no_file 	= false
+	var cant_copy	= false
+	var cant_load	= false
+	
+	for file in f_list.keys():
+		if dir_manager.file_exists(f_list[file][1]):
+			var full_path = project_folder.trim_suffix("/") + "/" + f_list[file][0].trim_suffix("/") + "/" + file
+			if dir_manager.copy(f_list[file][1], full_path) == OK:
+				files_list[file] = [f_list[file][0], f_list[file][2]]
+				
+			else: cant_copy = true
+		else: no_file = true
+	
+	for res in f_list.keys():
+		if dir_manager.file_exists(r_list[res][1]):
+			var full_path = project_folder.trim_suffix("/") + "/" + r_list[res][0].trim_suffix("/") + "/" + res
+			if dir_manager.copy(r_list[res][1], full_path) == OK:
+				var loaded_res = ResourceLoader.load(full_path)
+				if is_instance_valid(loaded_res):
+					loaded_res.resource_name = res
+					resources_list[res] = [r_list[res][0], loaded_res]
+					
+				else: cant_load = true
+			else: cant_copy = true
+		else: no_file = true
+	
+	if no_file:		Global.popup_error("LOAD: Part of project files not exist.\nResources not loaded into project.")
+	if cant_copy: 	Global.popup_error("LOAD: Can't copy part of saved resourses to temp folder.\nResources not loaded into project.")
+	if cant_load: 	Global.popup_error("LOAD: Can't load resource into project.")
 
 func clear_temp_folder():
 	var dir_manager = Directory.new()
@@ -106,6 +210,7 @@ func clear_temp_folder():
 			dir_manager.remove(files_list[file][0] + "/" + file)
 	
 	files_list.clear()
+	resources_list.clear()
 	
 	delete_folder_recursive(project_folder.trim_suffix("/"))
 			

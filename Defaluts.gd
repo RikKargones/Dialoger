@@ -1,5 +1,8 @@
 extends Node
 
+enum PICKER_TYPES 	{PERSON, MOOD, FONT, ALIGN}
+enum DIALOG_BLOCKS	{NONE, REPLICK, TEXTURE, OPTIONS, VARIBLE}
+
 var LocalesNames = {
 	"ar" : "Arabic",
 	"ar_AE" : "Arabic (United Arab Emirates)",

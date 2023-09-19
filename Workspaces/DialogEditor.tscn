@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Workspaces/GraphDialogEditor.gd" type="Script" id=1]
-[ext_resource path="res://GUI/LangChooseBt.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Workspaces/DialogEditor.gd" type="Script" id=1]
+[ext_resource path="res://DialogEditorElements/Pickers/LocalePicker.gd" type="Script" id=2]
 
 [node name="DialogEditor" type="MarginContainer"]
 process_priority = -1
@@ -49,28 +49,27 @@ margin_bottom = 26.0
 
 [node name="Space" type="Control" parent="Full/Settings"]
 margin_left = 192.0
-margin_right = 703.0
+margin_right = 749.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
 
 [node name="VSeparator2" type="VSeparator" parent="Full/Settings"]
-margin_left = 707.0
-margin_right = 711.0
+margin_left = 753.0
+margin_right = 757.0
 margin_bottom = 26.0
 
 [node name="LangLabel" type="Label" parent="Full/Settings"]
-margin_left = 715.0
+margin_left = 761.0
 margin_top = 3.0
-margin_right = 796.0
+margin_right = 842.0
 margin_bottom = 23.0
 text = "Localization:"
 
-[node name="LangChangeBt" parent="Full/Settings" instance=ExtResource( 2 )]
-margin_left = 800.0
+[node name="LocalePicker" type="OptionButton" parent="Full/Settings"]
+margin_left = 846.0
 margin_right = 875.0
-text = "English"
-items = [ "English", null, false, 0, null ]
-selected = 0
+margin_bottom = 26.0
+script = ExtResource( 2 )
 
 [node name="VSeparator3" type="VSeparator" parent="Full/Settings"]
 margin_left = 879.0
@@ -139,8 +138,7 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[connection signal="visibility_changed" from="." to="." method="_on_DialogEditor_visibility_changed"]
-[connection signal="item_selected" from="Full/Settings/LangChangeBt" to="." method="_on_LangChangeBt_item_selected"]
+[connection signal="item_selected" from="Full/Settings/LocalePicker" to="." method="_on_LocalePicker_item_selected"]
 [connection signal="item_selected" from="Full/Settings/DialogeChangeBt" to="." method="_on_DialogeChangeBt_item_selected"]
 [connection signal="child_exiting_tree" from="Full/EditZone/Map" to="." method="_on_Map_child_exiting_tree"]
 [connection signal="connection_from_empty" from="Full/EditZone/Map" to="." method="_on_Map_connection_from_empty"]
