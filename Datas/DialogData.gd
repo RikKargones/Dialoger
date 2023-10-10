@@ -222,3 +222,13 @@ func erase_dialog(dialog_name : String):
 	data.erase(dialog_name)
 	
 	emit_signal("dialog_deleted", dialog_name)
+
+func _get_export_data() -> Dictionary:
+	var export_data = {}
+	
+	for dialog in get_dialog_list():
+		export_data[dialog]["Start"] 		= data[dialog]["Start"]
+		export_data[dialog]["Nodes"] 		= data[dialog]["Nodes"]
+		export_data[dialog]["Connections"] 	= data[dialog]["Connections"]
+	
+	return export_data

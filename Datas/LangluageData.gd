@@ -131,15 +131,17 @@ func erase_message(key : String):
 		
 	emit_signal("msg_delited")
 
-func set_data_from_save(saved_data : Dictionary):
+func _set_data_from_save(saved_data : Dictionary):
 	msg_list = saved_data["MSG_LIST"]
 	
 	for key in saved_data.keys():
 		if key != "MSG_LIST":
 			var translation : Translation = FileManger.get_inside_resource(saved_data[key][0])
-			if is_instance_valid(translation): data[key] = [translation, saved_data[key][1]]
+			if is_instance_valid(translation):
+				TranslationServer.add_translation(translation)
+				data[key] = [translation, saved_data[key][1]]
 
-func get_save_data() -> Dictionary:
+func _get_save_data() -> Dictionary:
 	var saved_data = {"MSG_LIST" : msg_list}
 	
 	for locale in get_locales_list():

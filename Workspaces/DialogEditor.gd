@@ -38,19 +38,19 @@ func _physics_process(_delta):
 		mouse_prev_position = map.get_local_mouse_position()
 
 func show_map_menu():
+	map_menu.clear()
+	
 	if is_instance_valid(hovered_node):
 		if hovered_node.is_menu_blocked: return
 		
 		var actions = hovered_node.gather_actions()
-		
-		map_menu.clear()
 		
 		for action in actions.keys():
 			map_menu.add_item(action)
 			map_menu.set_item_metadata(map_menu.get_item_count() - 1, actions[action])
 			
 	map_menu.add_submenu_item("Add node", "AddMenu")
-	map_menu.rect_global_position = map.get_global_mouse_position()
+	map_menu.rect_global_position = get_global_mouse_position()
 	map_menu.popup()
 
 func update_add_nodes_menu():
@@ -176,3 +176,11 @@ func _on_AddMenu_id_pressed(id : int):
 	final_position = final_position.snapped(Vector2(map.snap_distance, map.snap_distance))
 	
 	add_node_by_type(id, final_position, "")
+
+func _on_Map_child_exiting_tree(node):
+	if node is BasicGraphNode:
+		var conections = map.get_connection_list()
+		
+		for con in conections:
+			if con ["to"] == node.name || con["from"] == node.name:
+				map.disconnect_node(con["from"], con["from_port"], con["to"], con["to_port"])

@@ -3,12 +3,20 @@ extends BaseData
 var system_defalut_font = ""
 var user_defalut_font	= ""
 
+signal font_aded
+signal font_changed
+signal font_renamed
+signal font_deleted
+signal seted_user_def_font
+
 func ready_prepare():
 	add_font("res://GUI/Reef.otf", "Dialoger")
 
 func set_key_by_defalut():
 	for font_name in get_fonts_list():
 		delete_font(font_name)
+	
+	ready_prepare()
 		
 	emit_signal("refresh_data")
 
@@ -31,14 +39,13 @@ func get_font(font_name : String) -> DynamicFont:
 	return null
 
 func set_user_defalut_font(font_name : String):
-	if is_font_in_list(font_name) || font_name == "": user_defalut_font = font_name
-	emit_signal("refresh_data")
+	if is_font_in_list(font_name) || font_name == "":
+		user_defalut_font = font_name
+		emit_signal("seted_user_def_font", font_name)
 
 func add_font(path : String, custom_name = ""):
 	var file_name : String = path.rsplit("/", true, 1)[1]
 	var font_info = FileManger.register_external_file(path, "Res/Fonts")
-	
-	print(file_name)
 	
 	if font_info.size() > 0:
 		var font_name_w_ex = font_info[0]
@@ -67,7 +74,7 @@ func add_font(path : String, custom_name = ""):
 			
 			data[full_name] = [font_name_w_ex, font]
 			FileManger.register_inside_resource(font, "DynamicFont")
-			emit_signal("refresh_data")
+			emit_signal("font_aded", full_name)
 		else:
 			Global.popup_error("File doesn't have dynamic font data.\nPlease, choose ONLY dynamic fonts (.otf, .ttf).")
 	else:
@@ -88,7 +95,7 @@ func change_font_data(font_name : String, path : String):
 			FileManger.unregister_external_file(data[font_name][0])
 			
 			data[font_name][0] = font_name_w_ex
-			emit_signal("refresh_data")
+			emit_signal("font_changed", font_name)
 		else:
 			Global.popup_error("FONT: File doesn't have dynamic font data.\nPlease, choose ONLY dynamic fonts (.otf, .ttf).")
 	else:
@@ -100,7 +107,7 @@ func change_font_name(old_font_name : String, new_font_name : String):
 	data[new_font_name] = data[old_font_name]
 	data.erase(old_font_name)
 	
-	emit_signal("refresh_data")
+	emit_signal("font_renamed", old_font_name, new_font_name)
 	
 func delete_font(font_name : String):
 	if !is_font_in_list(font_name): return
@@ -110,4 +117,12 @@ func delete_font(font_name : String):
 	
 	data.erase(font_name)
 	
-	emit_signal("refresh_data")
+	emit_signal("font_deleted", font_name)
+
+func _get_export_data() -> Dictionary:
+	var export_data = {}
+	
+	for font_name in get_fonts_list():
+		export_data[font_name] = data[font_name][0]
+	
+	return export_data

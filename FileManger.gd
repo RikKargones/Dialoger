@@ -159,11 +159,11 @@ func export_resources(dest : String):
 		r_list[res] = [resources_list[res][0], dest_path]
 		paths[full_path] = [dir_path, dest_path]
 	
-	for path in paths.keys():	
+	for path in paths.keys():
 		if !dir_manager.dir_exists(paths[path][0]): dir_manager.make_dir_recursive(paths[path][0])
 		if dir_manager.copy(path, paths[path][1]) != OK: cant_save = true
 		
-	if lost_file: Global.popup_error("EXPORT: Can't find part of saved resources. Not all project file's saved.")
+	if lost_file: Global.popup_error("EXPORT: Can't find part of saved resources. Not all project files saved.")
 	if cant_save: Global.popup_error("EXPORT: Can't save part of project resources in desired destanation.")
 	
 	return [f_list, r_list]

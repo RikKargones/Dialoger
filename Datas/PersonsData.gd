@@ -205,7 +205,7 @@ func get_person_font_name(person_id : String, lang_name : String) -> String:
 func get_person_font(person_id : String, lang_name : String) -> DynamicFont:
 	return FontsData.get_font(get_person_font_name(person_id, lang_name))
 
-func set_data_from_save(saved_data : Dictionary):
+func _set_data_from_save(saved_data : Dictionary):
 	for person_id in saved_data.keys():
 		data[person_id] = {"Align" : saved_data[person_id]["Align"], "Moods" : {}}
 		
@@ -219,7 +219,7 @@ func set_data_from_save(saved_data : Dictionary):
 				new_texture.create_from_image(new_image)
 				data[person_id]["Moods"][mood] = [new_texture, mood_file]
 	
-func get_save_data() -> Dictionary:
+func _get_save_data() -> Dictionary:
 	var saved_data = {}
 	
 	for person_id in get_persons_list():

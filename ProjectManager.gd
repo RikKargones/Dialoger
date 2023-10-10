@@ -1,10 +1,6 @@
 extends Node
 
 var project_name			= ""
-var project_folder			= ""
-var project_create_date		= Time.get_date_dict_from_system()
-var project_create_time		= Time.get_time_string_from_system()
-var project_create_version	= Defaluts.version
 var project_unsaved			= false
 
 var current_edit_lang 		= "English"
@@ -20,7 +16,6 @@ signal dialog_changed
 	
 func clear_project():
 	project_name 	= ""
-	project_folder 	= ""
 	
 	emit_signal("clear_project")
 	
@@ -85,8 +80,17 @@ func export_data(args = ["user://TestExport", false]):
 	
 	if dir_manager.dir_exists(main_path):
 		Global.update_export_status(export_step, "Exporting external resourses...")
-		var ext_res_list = FileManger.export_temp_files(main_path, !non_res)
+		var save_data = {}
+		save_data["ResPaths"] 		= FileManger.export_resources(main_path)
+		save_data["FontsData"]		= FontsData._get_export_data()
+		save_data["VariblesData"]	= VariblesData._get_export_data()
+		save_data["LocalesData"]	= LangluageData._get_export_data()
+		save_data["PersonsData"]	= PersonsData._get_export_data()
+		save_data["DialogData"]		= DialogData._get_export_data()
+		
 		var file_handler = File.new()
+		
+		
 		Global.call_deferred("update_export_status", export_step * FileManger.files_list.size(), "Exporting empty DialogDispetcher...")
 		
 		var dir_error = dir_manager.copy("res://DialogDispetcher/DialogDispetcher.gd", main_path + "/DialogDispetcher.gd")

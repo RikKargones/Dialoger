@@ -28,8 +28,12 @@ func set_data(new_data : Dictionary):
 		ProjectManager.project_unsaved = true
 		data = new_data
 
-func set_data_from_save(save_data : Dictionary):
+func _set_data_from_save(save_data : Dictionary):
 	data = save_data
+	emit_signal("refresh_data")
 
-func get_save_data() -> Dictionary:
+func _get_save_data() -> Dictionary:
 	return data
+	
+func _get_export_data() -> Dictionary:
+	return _get_save_data()
