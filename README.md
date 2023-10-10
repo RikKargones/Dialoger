@@ -1,4 +1,4 @@
-# Dialoger
+# Dialoger (Godot 3.5.2)
 
 Небольшая разработка отдельного инструмента для Godot Engine.
 
